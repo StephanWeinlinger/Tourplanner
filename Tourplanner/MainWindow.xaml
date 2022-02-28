@@ -5,8 +5,124 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tourplanner"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="MainWindow" Height="450" Width="800" MinHeight="300" MinWidth="300" FontSize="14">
+    <DockPanel>
+		<Menu DockPanel.Dock="Top" FontSize="14">
+			<MenuItem Header="_File">
+				<MenuItem Header="_Import" />
+				<MenuItem Header="_Export" />
+				<MenuItem Header="_Exit" />
+			</MenuItem>
+			<MenuItem Header="_Edit">
+				<MenuItem Header="_Add Tour" />
+				<MenuItem Header="_Modify Selected Tour" />
+				<MenuItem Header="_Delete Selected Tour" />
+				<MenuItem Header="_Add Log" />
+				<MenuItem Header="_Modify Selected Log" />
+				<MenuItem Header="_Delete Selected Log" />
+			</MenuItem>
+			<MenuItem Header="_Report">
+				<MenuItem Header="_Create Report Of Selected Tour" />
+				<MenuItem Header="_Create Summarized Report" />
+			</MenuItem>
+			<MenuItem Header="_Options">
+				<MenuItem Header="_Lorem ipsum" />
+			</MenuItem>
+			<MenuItem Header="_Help">
+				<MenuItem Header="_Lorem ipsum" />
+			</MenuItem>
+		</Menu>
+		<Grid DockPanel.Dock="Top">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<TextBox Text="Search here" Grid.Column="0"/>
+			<Button Content="Start Searching" Grid.Column="1" Padding="5, 0"/>
+		</Grid>
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="100" />
+				<ColumnDefinition Width="5" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+			<DockPanel Grid.Column="0">
+				<Label Content="Tours" DockPanel.Dock="Top" HorizontalAlignment="Center" />
+				<ListBox>
+					<ListBoxItem Content="Tour 1" />
+					<ListBoxItem Content="Tour 2" />
+					<ListBoxItem Content="Tour 3" />
+					<ListBoxItem Content="..." />
+				</ListBox>
+			</DockPanel>
+			<GridSplitter Grid.Column="1" HorizontalAlignment="Stretch"></GridSplitter>
+			<Grid Grid.Column="2">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*" />
+					<RowDefinition Height="5" />
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
+				<DockPanel Grid.Row="0">
+					<Label Content="Title: Tour 1" DockPanel.Dock="Top" HorizontalAlignment="Center"/>
+					<Grid DockPanel.Dock="Top">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+						<Button Grid.Column="0" Content="Route" />
+						<Button Grid.Column="1" Content="Description" />
+					</Grid>
+					<ScrollViewer HorizontalScrollBarVisibility="Auto">
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="*" />
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+							</Grid.RowDefinitions>
+							<Label Grid.Column="0" Grid.Row="0" Content="From:" />
+							<Label Grid.Column="1" Grid.Row="0" Content="Vienna" />
+							<Label Grid.Column="0" Grid.Row="1" Content="To:" />
+							<Label Grid.Column="1" Grid.Row="1" Content="Munich" />
+							<Label Grid.Column="0" Grid.Row="2" Content="Transport Type:" />
+							<Label Grid.Column="1" Grid.Row="2" Content="Train" />
+							<Label Grid.Column="0" Grid.Row="3" Content="Tour Distance:" />
+							<Label Grid.Column="1" Grid.Row="3" Content="550 km" />
+							<Label Grid.Column="0" Grid.Row="4" Content="Estimated Time:" />
+							<Label Grid.Column="1" Grid.Row="4" Content="7 h" />
+							<Label Grid.Column="0" Grid.Row="5" Content="Popularity:" />
+							<Label Grid.Column="1" Grid.Row="5" Content="30 / 100" />
+							<Label Grid.Column="0" Grid.Row="6" Content="Child Friendliness:" />
+							<Label Grid.Column="1" Grid.Row="6" Content="98 / 100" />
+							<Image Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" Source="/assets/map_placeholder.png" Width="500" />
+						</Grid>
+					</ScrollViewer>
+					<!-- <TextBlock TextWrapping="WrapWithOverflow" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et"></TextBlock> -->
+				</DockPanel>
+				<GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" />
+				<DockPanel Grid.Row="2">
+					<Label Content="Logs" DockPanel.Dock="Top" HorizontalAlignment="Center" />
+					<ScrollViewer HorizontalScrollBarVisibility="Auto">
+						<DataGrid AutoGenerateColumns="False">
+							<DataGrid.Columns>
+								<DataGridTextColumn Header="Date"/>
+								<DataGridTextColumn Header="Total Time"/>
+								<DataGridTextColumn Header="Difficulty"/>
+								<DataGridTextColumn Header="Rating"/>
+								<DataGridTextColumn Header="Comment"/>
+							</DataGrid.Columns>
+						</DataGrid>
+					</ScrollViewer>
+				</DockPanel>
+			</Grid>
+		</Grid>
+</DockPanel>
 </Window>
