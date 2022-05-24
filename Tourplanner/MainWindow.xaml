@@ -55,7 +55,7 @@
 					<ListBoxItem Content="..." />
 				</ListBox>
 			</DockPanel>
-			<GridSplitter Grid.Column="1" HorizontalAlignment="Stretch"></GridSplitter>
+			<GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" />
 			<Grid Grid.Column="2">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="*" />
@@ -122,5 +122,5 @@
 				</DockPanel>
 			</Grid>
 		</Grid>
-</DockPanel>
+	</DockPanel>
 </Window>

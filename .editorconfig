@@ -115,7 +115,7 @@ csharp_space_between_method_call_name_and_opening_parenthesis = false
 csharp_space_between_method_call_empty_parameter_list_parentheses = false
 # Wrapping preferences
 csharp_preserve_single_line_statements =false
-csharp_preserve_single_line_blocks = true
+csharp_preserve_single_line_blocks =true
 insert_final_newline=false
 csharp_space_before_open_square_brackets=false
 ###############################
