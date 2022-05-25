@@ -27,7 +27,7 @@ namespace Tourplanner.Server.Controllers {
 	    }
 
 	    [HttpDelete]
-	    public async Task<ActionResult<Tour>> DeleteTour() {
+	    public async Task<ActionResult> DeleteTour() {
 		    return NotFound();
 	    }
 	}
