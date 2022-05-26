@@ -2,6 +2,16 @@
 
 namespace Tourplanner.Shared.Model {
     public class Tour {
+	    public Tour(int id, string name, string description, string from, string to, string transportType, float distance, string time) {
+		    Id = id;
+		    Name = name;
+		    Description = description;
+		    From = from;
+		    To = to;
+		    TransportType = transportType;
+		    Distance = distance;
+		    Time = time;
+	    }
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }

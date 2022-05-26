@@ -6,6 +6,15 @@ using System.Threading.Tasks;
 
 namespace Tourplanner.Shared.Model {
 	public class Log {
+		public Log(int id, int tourId, DateTime date, string comment, int difficulty, string time, int rating) {
+			Id = id;
+			TourId = tourId;
+			Date = date;
+			Comment = comment;
+			Difficulty = difficulty;
+			Time = time;
+			Rating = rating;
+		}
 		public int Id { get; set; }
 		public int TourId { get; set; }
 		public DateTime Date { get; set; }
