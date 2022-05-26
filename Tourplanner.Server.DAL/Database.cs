@@ -21,7 +21,7 @@ namespace Tourplanner.Server.DAL {
 			return new NpgsqlCommand(genericCommandText);
 		}
 
-		// declare params for sql command
+		// declare parameter (without setting value)
 		public int DeclareParameter(DbCommand command, string name, DbType type) {
 			if(!command.Parameters.Contains(name)) {
 				int index = command.Parameters.Add(new NpgsqlParameter(name, type));
@@ -30,11 +30,13 @@ namespace Tourplanner.Server.DAL {
 			throw new ArgumentException(string.Format("Parameter {0} already exists.", name));
 		}
 
+		// declare and set parameter (combines DeclareParemter and SetParameter)
 		public void DefineParameter(DbCommand command, string name, DbType type, object value) {
 			int index = DeclareParameter(command, name, type);
 			command.Parameters[index].Value = value;
 		}
 
+		// set value for parameter by name of parameter
 		public void SetParameter(DbCommand command, string name, object value) {
 			if(command.Parameters.Contains(name)) {
 				command.Parameters[name].Value = value;

@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 // includes list with logs
 namespace Tourplanner.Shared.Model {
 	public class CombinedTour {
-		public CombinedTour(int id, string name, string description, string from, string to, string transportType, float distance, string time, List<Log> logs) {
+		public CombinedTour() {}
+		public CombinedTour(int id, string name, string description, string from, string to, string transportType, double distance, string time, List<Log> logs) {
 			Id = id;
 			Name = name;
 			Description = description;
@@ -24,7 +25,7 @@ namespace Tourplanner.Shared.Model {
 		public string From { get; set; }
 		public string To { get; set; }
 		public string TransportType { get; set; }
-		public float Distance { get; set; }
+		public double Distance { get; set; }
 		public string Time { get; set; }
 		public List<Log> Logs { get; set; }
 	}

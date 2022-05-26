@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Tourplanner.Server.DAL;
+using Tourplanner.Server.DAL.DAO;
 using Tourplanner.Shared.Model;
 
 namespace Tourplanner.Server.Controllers {
@@ -17,18 +19,24 @@ namespace Tourplanner.Server.Controllers {
 	    }
 
 	    [HttpPost]
-	    public async Task<ActionResult<Tour>> InsertTour() {
-		    return NotFound();
+	    public async Task<ActionResult<Tour>> InsertTour(Tour newTour) {
+		    TourDao tourDao = DalFactory.CreateTourDao();
+		    Tour tour = tourDao.InsertTour(newTour);
+		    return tour;
 	    }
 
 	    [HttpPut]
-	    public async Task<ActionResult<Tour>> UpdateTour() {
-		    return NotFound();
-	    }
+	    public async Task<ActionResult<Tour>> UpdateTour(Tour newTour) {
+			TourDao tourDao = DalFactory.CreateTourDao();
+			Tour tour = tourDao.UpdateTour(newTour);
+			return tour;
+		}
 
-	    [HttpDelete]
-	    public async Task<ActionResult> DeleteTour() {
-		    return NotFound();
+	    [HttpDelete("{id}")]
+	    public async Task<ActionResult> DeleteTour(int id) {
+			TourDao tourDao = DalFactory.CreateTourDao();
+			tourDao.DeleteTour(id);
+			return NoContent();
 	    }
 	}
 }
