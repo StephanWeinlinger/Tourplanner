@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Documents;
 using Tourplanner.Server.DAL;
 using Tourplanner.Server.DAL.DAO;
+using Tourplanner.Server.Response;
 using Tourplanner.Shared.Model;
 
 namespace Tourplanner.Server.Controllers {
@@ -34,23 +35,37 @@ namespace Tourplanner.Server.Controllers {
 
 	    [HttpPost]
 	    public async Task<ActionResult<Tour>> InsertTour(Tour newTour) {
+		    if(!ModelState.IsValid) {
+			    return BadRequest(ModelState);
+		    }
 		    TourDao tourDao = DalFactory.CreateTourDao();
-		    Tour tour = tourDao.InsertTour(newTour);
-		    return tour;
+			try {
+			    Tour tour = tourDao.InsertTour(newTour);
+			    return tour;
+		    } catch(Exception e) {
+			    return BadRequest(new CustomResponse(false, new List<string>() {"Error in database"}));
+		    }
 	    }
 
 	    [HttpPut("{id}")]
 	    public async Task<ActionResult<Tour>> UpdateTour(int id, Tour newTour) {
+		    if(!ModelState.IsValid) {
+			    return BadRequest(ModelState);
+		    }
 			TourDao tourDao = DalFactory.CreateTourDao();
-			Tour tour = tourDao.UpdateTour(id, newTour);
-			return tour;
+			try {
+				Tour tour = tourDao.UpdateTour(id, newTour);
+				return tour;
+		    } catch(Exception e) {
+			    return BadRequest(new CustomResponse(false, new List<string>() {"Error in database"}));
+		    }
 		}
 
 	    [HttpDelete("{id}")]
 	    public async Task<ActionResult> DeleteTour(int id) {
 			TourDao tourDao = DalFactory.CreateTourDao();
 			tourDao.DeleteTour(id);
-			return NoContent();
+			return Ok();
 	    }
 	}
 }
