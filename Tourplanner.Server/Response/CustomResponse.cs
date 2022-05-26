@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace Tourplanner.Server.Response {
 	public class CustomResponse {
-		public CustomResponse(bool success, List<string> errors) {
+		public CustomResponse(bool success, Dictionary<string, string> errors) {
 			Success = success;
-			Errors = new List<string>(errors);
+			Errors = new Dictionary<string, string>(errors);
 		}
 		public bool Success { get; set; }
-		public List<string> Errors { get; set; }
+		public Dictionary<string, string> Errors { get; set; }
 	}
 }

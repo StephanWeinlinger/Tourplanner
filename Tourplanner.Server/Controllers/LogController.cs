@@ -25,7 +25,7 @@ namespace Tourplanner.Server.Controllers {
 			    Log log = logDao.InsertLog(newLog);
 			    return log;
 		    } catch(Exception e) {
-			    return BadRequest(new CustomResponse(false, new List<string>() {"Error in database"}));
+			    return BadRequest(new CustomResponse(false, new Dictionary<string, string> { { "Custom", "Error in database" } }));
 		    }
 	    }
 
@@ -39,7 +39,7 @@ namespace Tourplanner.Server.Controllers {
 				Log log = logDao.UpdateLog(id, updatedLog);
 				return log;
 			} catch(Exception e) {
-				return BadRequest(new CustomResponse(false, new List<string>() {"Error in database"}));
+				return BadRequest(new CustomResponse(false, new Dictionary<string, string> { { "Custom", "Error in database" } }));
 			}
 		}
 

@@ -43,7 +43,7 @@ namespace Tourplanner.Server.Controllers {
 			    Tour tour = tourDao.InsertTour(newTour);
 			    return tour;
 		    } catch(Exception e) {
-			    return BadRequest(new CustomResponse(false, new List<string>() {"Error in database"}));
+			    return BadRequest(new CustomResponse(false, new Dictionary<string, string>{ {"Custom", "Error in database"} }));
 		    }
 	    }
 
@@ -57,7 +57,7 @@ namespace Tourplanner.Server.Controllers {
 				Tour tour = tourDao.UpdateTour(id, newTour);
 				return tour;
 		    } catch(Exception e) {
-			    return BadRequest(new CustomResponse(false, new List<string>() {"Error in database"}));
+			    return BadRequest(new CustomResponse(false, new Dictionary<string, string> { { "Custom", "Error in database" } }));
 		    }
 		}
 
