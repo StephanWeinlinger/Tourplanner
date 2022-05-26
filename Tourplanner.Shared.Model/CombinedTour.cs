@@ -17,15 +17,15 @@ namespace Tourplanner.Shared.Model {
 			TransportType = transportType;
 			Logs = new List<Log>(logs);
 		}
-		public CombinedTour(int id, string name, string description, string from, string to, string transportType, double distance, string time, List<Log> logs) {
-			Id = id;
-			Name = name;
-			Description = description;
-			From = from;
-			To = to;
-			TransportType = transportType;
-			Distance = distance;
-			Time = time;
+		public CombinedTour(Tour tour, List<Log> logs) {
+			Id = tour.Id;
+			Name = tour.Name;
+			Description = tour.Description;
+			From = tour.From;
+			To = tour.To;
+			TransportType = tour.TransportType;
+			Distance = tour.Distance;
+			Time = tour.Time;
 			Logs = new List<Log>(logs);
 		}
 		[Range(1, Int32.MaxValue)]

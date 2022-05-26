@@ -26,9 +26,7 @@ namespace Tourplanner.Server.Controllers {
 				LogDao logDao = DalFactory.CreateLogDao();
 				List<Log> logs = logDao.GetAllLogsWithTourId(entry.Id);
 				// add entry and logs to combindedTours
-				combinedTours.Add(new CombinedTour(
-					entry.Id, entry.Name, entry.Description, entry.From, entry.To, entry.TransportType, entry.Distance, entry.Time, logs
-					));
+				combinedTours.Add(new CombinedTour(entry, logs));
 			}
 		    return combinedTours;
 	    }
