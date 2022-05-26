@@ -4,7 +4,14 @@ using System.ComponentModel.DataAnnotations;
 namespace Tourplanner.Shared.Model {
     public class Tour {
 	    public Tour() { }
-	    public Tour(string name, string description, string from, string to, string transportType, double distance, string time) {
+	    public Tour(string name, string description, string from, string to, string transportType) {
+		    Name = name;
+		    Description = description;
+		    From = from;
+		    To = to;
+		    TransportType = transportType;
+	    }
+		public Tour(string name, string description, string from, string to, string transportType, double distance, string time) {
 		    Name = name;
 		    Description = description;
 		    From = from;
@@ -23,6 +30,7 @@ namespace Tourplanner.Shared.Model {
 		    Distance = distance;
 		    Time = time;
 	    }
+	    [Range(1, Int32.MaxValue)]
 		public int Id { get; set; }
 		[Required]
 		public string Name { get; set; }
@@ -34,9 +42,7 @@ namespace Tourplanner.Shared.Model {
 		public string To { get; set; }
 		[Required]
 		public string TransportType { get; set; }
-		[Required]
 		public double Distance { get; set; }
-		[Required]
 		public string Time { get; set; } // MapQuest returns it as a string and postgresql datetime only supports HH up to 24
 	}
 }

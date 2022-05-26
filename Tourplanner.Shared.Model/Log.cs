@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,14 +9,6 @@ using System.Threading.Tasks;
 namespace Tourplanner.Shared.Model {
 	public class Log {
 		public Log() { }
-		public Log(int tourId, DateTime date, string comment, int difficulty, string time, int rating) {
-			TourId = tourId;
-			Date = date;
-			Comment = comment;
-			Difficulty = difficulty;
-			Time = time;
-			Rating = rating;
-		}
 		public Log(int id, int tourId, DateTime date, string comment, int difficulty, string time, int rating) {
 			Id = id;
 			TourId = tourId;
@@ -25,6 +18,7 @@ namespace Tourplanner.Shared.Model {
 			Time = time;
 			Rating = rating;
 		}
+		[Range(1, Int32.MaxValue)]
 		public int Id { get; set; }
 		[Required]
 		public int TourId { get; set; }
