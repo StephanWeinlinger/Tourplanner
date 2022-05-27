@@ -16,11 +16,19 @@ namespace Tourplanner.Server.Controllers {
     public class TourController : ControllerBase {
 
 	    [HttpGet]
-	    public async Task<ActionResult<List<CombinedTour>>> GetCombinedTours() {
+	    public async Task<ActionResult<List<CombinedTour>>> GetCombinedTours(string filter) {
 		    List<CombinedTour> combinedTours = new List<CombinedTour>();
-			// get all tours
 		    TourDao tourDao = DalFactory.CreateTourDao();
-		    List<Tour> tours = tourDao.GetAllTours();
+		    List<Tour> tours = new List<Tour>();
+			// check if request includes a filter
+			if(filter == null) {
+				// get all tours
+				tours = tourDao.GetAllTours();
+			} else {
+				// get filtered tours
+				tours = tourDao.GetAllToursWithFilter(filter.ToLower());
+			}
+		    
 			// get all logs for each tour
 		    foreach(Tour entry in tours) {
 				LogDao logDao = DalFactory.CreateLogDao();

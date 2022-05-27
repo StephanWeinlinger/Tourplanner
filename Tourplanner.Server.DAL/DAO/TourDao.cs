@@ -13,6 +13,7 @@ namespace Tourplanner.Server.DAL.DAO {
 		private const string _sqlGetTourById =
 			"SELECT t.\"Id\", t.\"Name\", t.\"Description\", t.\"From\", t.\"To\", tt.\"Type\" as \"TransportType\", t.\"Distance\", t.\"Time\" FROM \"Tour\" t JOIN \"TransportType\" tt ON t.\"TransportType\" = tt.\"Id\" WHERE t.\"Id\" = @Id";
 		private const string _sqlGetAllTours = "SELECT t.\"Id\", t.\"Name\", t.\"Description\", t.\"From\", t.\"To\", tt.\"Type\" as \"TransportType\", t.\"Distance\", t.\"Time\" FROM \"Tour\" t JOIN \"TransportType\" tt ON t.\"TransportType\" = tt.\"Id\"";
+		private const string _sqlGetAllToursWithFilter = "SELECT t.\"Id\", t.\"Name\", t.\"Description\", t.\"From\", t.\"To\", tt.\"Type\" as \"TransportType\", t.\"Distance\", t.\"Time\" FROM \"Tour\" t JOIN \"TransportType\" tt ON t.\"TransportType\" = tt.\"Id\" WHERE LOWER(t.\"Name\") LIKE @Filter OR LOWER(t.\"Description\") LIKE @Filter OR EXISTS(SELECT * FROM \"Log\" l WHERE l.\"TourId\" = t.\"Id\" AND LOWER(l.\"Comment\") LIKE @Filter)";
 		private const string _sqlInsertTour = "INSERT INTO \"Tour\" (\"Name\", \"Description\", \"From\", \"To\", \"TransportType\", \"Distance\", \"Time\") VALUES (@Name, @Description, @From, @To, @TransportType, @Distance, @Time) RETURNING \"Id\"";
 		private const string _sqlUpdateTour = "UPDATE \"Tour\" SET \"Id\" = @newId, \"Name\" = @Name, \"Description\" = @Description, \"From\" = @From, \"To\" = @To, \"TransportType\" = @TransportType, \"Distance\" = @Distance, \"Time\" = @Time WHERE \"Id\" = @Id RETURNING \"Id\"";
 		private const string _sqlDeleteTour = "DELETE FROM \"Tour\" WHERE \"Id\" = @Id";
@@ -46,6 +47,17 @@ namespace Tourplanner.Server.DAL.DAO {
 
 			List<Tour> tours = new List<Tour>();
 			// using using, otherwise reader has to be closed manually
+			using(IDataReader reader = _database.ExecuteReader(command)) {
+				tours = ReadTours(reader);
+			}
+			return tours;
+		}
+
+		public List<Tour> GetAllToursWithFilter(string filter) {
+			DbCommand command = _database.CreateCommand(_sqlGetAllToursWithFilter);
+			_database.DefineParameter(command, "Filter", DbType.String, $"%{filter}%");
+
+			List<Tour> tours = new List<Tour>();
 			using(IDataReader reader = _database.ExecuteReader(command)) {
 				tours = ReadTours(reader);
 			}
