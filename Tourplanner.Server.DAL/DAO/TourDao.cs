@@ -15,11 +15,11 @@ namespace Tourplanner.Server.DAL.DAO {
 		private const string _sqlGetAllTours = "SELECT t.\"Id\", t.\"Name\", t.\"Description\", t.\"From\", t.\"To\", tt.\"Type\" as \"TransportType\", t.\"Distance\", t.\"Time\" FROM \"Tour\" t JOIN \"TransportType\" tt ON t.\"TransportType\" = tt.\"Id\"";
 		private const string _sqlGetAllToursWithFilter = "SELECT t.\"Id\", t.\"Name\", t.\"Description\", t.\"From\", t.\"To\", tt.\"Type\" as \"TransportType\", t.\"Distance\", t.\"Time\" FROM \"Tour\" t JOIN \"TransportType\" tt ON t.\"TransportType\" = tt.\"Id\" WHERE LOWER(t.\"Name\") LIKE @Filter OR LOWER(t.\"Description\") LIKE @Filter OR EXISTS(SELECT * FROM \"Log\" l WHERE l.\"TourId\" = t.\"Id\" AND LOWER(l.\"Comment\") LIKE @Filter)";
 		private const string _sqlInsertTour = "INSERT INTO \"Tour\" (\"Name\", \"Description\", \"From\", \"To\", \"TransportType\", \"Distance\", \"Time\") VALUES (@Name, @Description, @From, @To, @TransportType, @Distance, @Time) RETURNING \"Id\"";
-		private const string _sqlUpdateTour = "UPDATE \"Tour\" SET \"Id\" = @newId, \"Name\" = @Name, \"Description\" = @Description, \"From\" = @From, \"To\" = @To, \"TransportType\" = @TransportType, \"Distance\" = @Distance, \"Time\" = @Time WHERE \"Id\" = @Id RETURNING \"Id\"";
+		private const string _sqlUpdateTour = "UPDATE \"Tour\" SET \"Name\" = @Name, \"Description\" = @Description, \"From\" = @From, \"To\" = @To, \"TransportType\" = @TransportType, \"Distance\" = @Distance, \"Time\" = @Time WHERE \"Id\" = @Id RETURNING \"Id\"";
 		private const string _sqlDeleteTour = "DELETE FROM \"Tour\" WHERE \"Id\" = @Id";
 		private const string _sqlDeleteAllTours = "DELETE FROM \"Tour\"";
 
-		private IDatabase _database;
+		private Database _database;
 		private Dictionary<string, int> _transportType;
 
 		public TourDao() {
@@ -81,7 +81,6 @@ namespace Tourplanner.Server.DAL.DAO {
 		// also able to update the id
 		public Tour UpdateTour(int id, Tour updatedTour) {
 			DbCommand command = _database.CreateCommand(_sqlUpdateTour);
-			_database.DefineParameter(command, "newId", DbType.Int32, updatedTour.Id);
 			_database.DefineParameter(command, "Name", DbType.String, updatedTour.Name);
 			_database.DefineParameter(command, "Description", DbType.String, updatedTour.Description);
 			_database.DefineParameter(command, "From", DbType.String, updatedTour.From);

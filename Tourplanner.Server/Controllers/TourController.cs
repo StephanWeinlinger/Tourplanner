@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Documents;
 using Tourplanner.Server.DAL;
@@ -44,11 +45,29 @@ namespace Tourplanner.Server.Controllers {
 		    if(!ModelState.IsValid) {
 			    return BadRequest(ModelState);
 		    }
-		    TourDao tourDao = DalFactory.CreateTourDao();
-			try {
+
+		    try {
+			    // get information from mapquest
+			    MapQuest mapQuest = DalFactory.GetMapQuest();
+			    MapQuestInformationResponse response =
+				    await mapQuest.GetInformation(newTour.From, newTour.To, newTour.TransportType);
+				newTour.Distance = response.Distance;
+				newTour.Time = response.FormattedTime;
+
+				// insert tour in database
+			    TourDao tourDao = DalFactory.CreateTourDao();
 			    Tour tour = tourDao.InsertTour(newTour);
+
+				// get image link from mapquest
+				string url = mapQuest.GetMap(response.SessionId);
+				// download image to filesystem
+				Filesystem filesystem = DalFactory.GetFilesystem();
+				filesystem.DownloadImage(url, tour.Id);
+
 			    return tour;
-		    } catch(Exception e) {
+		    } catch(HttpRequestException e) {
+			    return BadRequest(new CustomResponse(false, new Dictionary<string, string> { { "Custom", e.Message } }));
+			} catch(Exception e) {
 			    return BadRequest(new CustomResponse(false, new Dictionary<string, string>{ {"Custom", "Error in database"} }));
 		    }
 	    }
@@ -58,19 +77,41 @@ namespace Tourplanner.Server.Controllers {
 		    if(!ModelState.IsValid) {
 			    return BadRequest(ModelState);
 		    }
-			TourDao tourDao = DalFactory.CreateTourDao();
+
 			try {
+				// get information from mapquest
+				MapQuest mapQuest = DalFactory.GetMapQuest();
+				MapQuestInformationResponse response =
+					await mapQuest.GetInformation(newTour.From, newTour.To, newTour.TransportType);
+				newTour.Distance = response.Distance;
+				newTour.Time = response.FormattedTime;
+
+				// update tour in database
+				TourDao tourDao = DalFactory.CreateTourDao();
 				Tour tour = tourDao.UpdateTour(id, newTour);
+
+				// get image link from mapquest
+				string url = mapQuest.GetMap(response.SessionId);
+				// download image to filesystem
+				Filesystem filesystem = DalFactory.GetFilesystem();
+				filesystem.DownloadImage(url, tour.Id);
+
 				return tour;
-		    } catch(Exception e) {
-			    return BadRequest(new CustomResponse(false, new Dictionary<string, string> { { "Custom", "Error in database" } }));
-		    }
+			} catch(HttpRequestException e) {
+				return BadRequest(new CustomResponse(false, new Dictionary<string, string> { { "Custom", e.Message } }));
+			} catch(Exception e) {
+				return BadRequest(new CustomResponse(false, new Dictionary<string, string> { { "Custom", "Error in database" } }));
+			}
 		}
 
 	    [HttpDelete("{id}")]
 	    public async Task<ActionResult> DeleteTour(int id) {
 			TourDao tourDao = DalFactory.CreateTourDao();
 			tourDao.DeleteTour(id);
+
+			Filesystem filesystem = DalFactory.GetFilesystem();
+			filesystem.RemoveImage(id);
+			filesystem.RemoveAllImages();
 			return Ok();
 	    }
 	}

@@ -12,10 +12,10 @@ namespace Tourplanner.Server.DAL.DAO {
 		private const string _sqlGetLogById = "SELECT * FROM \"Log\" WHERE \"Id\" = @Id";
 		private const string _sqlGetAllLogsWithTourId = "SELECT * FROM \"Log\" WHERE \"TourId\" = @TourId";
 		private const string _sqlInsertLog = "INSERT INTO \"Log\" (\"TourId\", \"Date\", \"Comment\", \"Difficulty\", \"Time\", \"Rating\") VALUES (@TourId, @Date, @Comment, @Difficulty, @Time, @Rating) RETURNING \"Id\"";
-		private const string _sqlUpdateLog = "UPDATE \"Log\" SET \"Id\" = @newId, \"TourId\" = @TourId, \"Date\" = @Date, \"Comment\" = @Comment, \"Difficulty\" = @Difficulty, \"Time\" = @Time, \"Rating\" = @Rating WHERE \"Id\" = @Id RETURNING \"Id\"";
+		private const string _sqlUpdateLog = "UPDATE \"Log\" SET \"TourId\" = @TourId, \"Date\" = @Date, \"Comment\" = @Comment, \"Difficulty\" = @Difficulty, \"Time\" = @Time, \"Rating\" = @Rating WHERE \"Id\" = @Id RETURNING \"Id\"";
 		private const string _sqlDeleteLog = "DELETE FROM \"Log\" WHERE \"Id\" = @Id";
 
-		private IDatabase _database;
+		private Database _database;
 
 		public LogDao() {
 			_database = DalFactory.GetDatabase();
@@ -60,7 +60,6 @@ namespace Tourplanner.Server.DAL.DAO {
 		// also able to update the id
 		public Log UpdateLog(int id, Log updatedLog) {
 			DbCommand command = _database.CreateCommand(_sqlUpdateLog);
-			_database.DefineParameter(command, "newId", DbType.Int32, updatedLog.Id);
 			_database.DefineParameter(command, "TourId", DbType.Int32, updatedLog.TourId);
 			_database.DefineParameter(command, "Date", DbType.DateTime, updatedLog.Date);
 			_database.DefineParameter(command, "Comment", DbType.String, updatedLog.Comment);

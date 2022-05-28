@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 // includes list with logs
 namespace Tourplanner.Shared.Model {
 	public class CombinedTour {
-		public CombinedTour(int id, string name, string description, string from, string to, string transportType, List<Log> logs) {
-			Id = id;
+		public CombinedTour() {}
+		public CombinedTour(string name, string description, string from, string to, string transportType, List<Log> logs) {
 			Name = name;
 			Description = description;
 			From = from;
@@ -28,7 +29,13 @@ namespace Tourplanner.Shared.Model {
 			Time = tour.Time;
 			Logs = new List<Log>(logs);
 		}
-		[Range(1, Int32.MaxValue)]
+		public CombinedTour(string name, string description, string from, string to, string transportType) {
+			Name = name;
+			Description = description;
+			From = from;
+			To = to;
+			TransportType = transportType;
+		}
 		public int Id { get; set; }
 		[Required]
 		public string Name { get; set; }

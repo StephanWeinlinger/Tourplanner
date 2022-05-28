@@ -9,7 +9,7 @@ using Npgsql;
 
 // TODO check if the exception throws are really necessary here, or can be handled in the BL
 namespace Tourplanner.Server.DAL {
-	public class Database : IDatabase {
+	public class Database {
 		private string _connectionString;
 
 		public Database(string connectionString) {
@@ -34,15 +34,6 @@ namespace Tourplanner.Server.DAL {
 		public void DefineParameter(DbCommand command, string name, DbType type, object value) {
 			int index = DeclareParameter(command, name, type);
 			command.Parameters[index].Value = value;
-		}
-
-		// set value for parameter by name of parameter
-		public void SetParameter(DbCommand command, string name, object value) {
-			if(command.Parameters.Contains(name)) {
-				command.Parameters[name].Value = value;
-			} else {
-				throw new ArgumentException(string.Format("Parameter {0} does not exist.", name));
-			}
 		}
 
 		// open connection to sql server

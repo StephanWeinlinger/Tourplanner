@@ -33,7 +33,6 @@ namespace Tourplanner.Shared.Model {
 			Time = time;
 			Rating = rating;
 		}
-		[Range(1, Int32.MaxValue)]
 		public int Id { get; set; }
 		// TODO maybe fix
 		// not required when importing
