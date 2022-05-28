@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Tourplanner.Client"
+        xmlns:local="clr-namespace:Tourplanner.Client.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" MinHeight="300" MinWidth="300" FontSize="14">
     <DockPanel>
@@ -14,15 +14,15 @@
 				<MenuItem Header="_Exit" />
 			</MenuItem>
 			<MenuItem Header="_Edit">
-				<MenuItem Header="_Add Tour" />
-				<MenuItem Header="_Modify Selected Tour" />
-				<MenuItem Header="_Delete Selected Tour" />
-				<MenuItem Header="_Add Log" />
-				<MenuItem Header="_Modify Selected Log" />
-				<MenuItem Header="_Delete Selected Log" />
+				<MenuItem Header="_Add Tour" Command="{Binding AddTour}" />
+				<MenuItem Header="_Modify Selected Tour" Command="{Binding UpdateTour}" />
+				<MenuItem Header="_Delete Selected Tour" Command="{Binding DeleteTour}" />
+				<MenuItem Header="_Add Log" Command="{Binding AddTourLog}" />
+				<MenuItem Header="_Modify Selected Log" Command="{Binding UpdateTourLog}" />
+				<MenuItem Header="_Delete Selected Log" Command="{Binding DeleteTourLog}" />
 			</MenuItem>
 			<MenuItem Header="_Report">
-				<MenuItem Header="_Create Report Of Selected Tour" />
+				<MenuItem Header="_Create Report Of Selected Tour" Command="{Binding CreateTourRaport}" />
 				<MenuItem Header="_Create Summarized Report" />
 			</MenuItem>
 			<MenuItem Header="_Options">
@@ -112,10 +112,10 @@
 					<Label Content="Logs" DockPanel.Dock="Top" HorizontalAlignment="Center" />
 						<DataGrid AutoGenerateColumns="False">
 							<DataGrid.Columns>
-								<DataGridTextColumn Header="Date"/>
-								<DataGridTextColumn Header="Total Time"/>
-								<DataGridTextColumn Header="Difficulty"/>
-								<DataGridTextColumn Header="Rating"/>
+							<DataGridTextColumn Header="Date" Binding="{Binding TourDate}"/>
+							<DataGridTextColumn Header="Total Time" Binding="{Binding TourTimeTotal}"/>
+							<DataGridTextColumn Header="Difficulty" Binding="{Binding TourDifficulty}"/>
+							<DataGridTextColumn Header="Rating" Binding="{Binding TourRating}"/>
 								<DataGridTextColumn Header="Comment" Width="*"/>
 							</DataGrid.Columns>
 						</DataGrid>
