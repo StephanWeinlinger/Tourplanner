@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Documents;
 using Tourplanner.Server.DAL;
@@ -20,25 +21,35 @@ namespace Tourplanner.Server.Controllers {
 		// returns GetCombinedTours
 		// TODO maybe add exception handling, even though it shouldn't throw them, since ids are set by database
 		[HttpPost]
-		public async Task<ActionResult<List<CombinedTour>>> ImportTours(List<CombinedTour> newCombinedTours) {
+		public async Task<ActionResult<List<CombinedTour>>> ImportTours(IEnumerable<CombinedTour> newCombinedTours) {
 			if(!ModelState.IsValid) {
 				return BadRequest(ModelState);
 			}
-			
+
 			// delete all db entries
 			TourDao tourDao1 = DalFactory.CreateTourDao();
 			tourDao1.DeleteAllTours();
-			// TODO delete all images
+			// delete all images
+			Filesystem filesystem = DalFactory.GetFilesystem();
+			filesystem.RemoveAllImages();
 
 			List<CombinedTour> combinedTours = new List<CombinedTour>();
-			// map over each entry and query mapquest, add tour and log to database and add image
+			MapQuest mapQuest = DalFactory.GetMapQuest();
+			// map over each entry and query mapquest, add tour and log to database and download image
 			foreach(CombinedTour entry in newCombinedTours) {
-				// query mapquest, on error skip (continue)
-				// TODO mapquest
+				MapQuestInformationResponse response = null;
+				try {
+					// query mapquest, on error skip whole entry (continue)
+					response = await mapQuest.GetInformation(entry.From, entry.To, entry.TransportType);
+				} catch(Exception e) {
+					continue;
+				}
+
 				// add to db, shouldn't cause error
 				TourDao tourDao2 = new TourDao();
 				// insert using distance and time from mapquest
-				Tour newTour = tourDao2.InsertTour(new Tour(entry.Name, entry.Description, entry.From, entry.To, entry.TransportType, entry.Distance, entry.Time));
+				Tour newTour = tourDao2.InsertTour(new Tour(entry.Name, entry.Description, entry.From, entry.To,
+					entry.TransportType, response.Distance, response.FormattedTime));
 				// add to combinedTours for return
 				combinedTours.Add(new CombinedTour(newTour, new List<Log>()));
 				foreach(Log logEntry in entry.Logs) {
@@ -47,11 +58,15 @@ namespace Tourplanner.Server.Controllers {
 					Log newLog = logDao1.InsertLog(new Log(newTour.Id, logEntry.Date, logEntry.Comment,
 						logEntry.Difficulty, logEntry.Time, logEntry.Rating));
 					// add to combinedTours for return
-					combinedTours[combinedTours.Count].Logs.Add(newLog);
+					combinedTours[combinedTours.Count - 1].Logs.Add(newLog);
 				}
 				// add image, shouldn't cause error
-				// TODO add image
+				// get image link from mapquest
+				string url = mapQuest.GetMap(response.SessionId);
+				// download image to filesystem
+				filesystem.DownloadImage(url, newTour.Id);
 			}
+
 			return combinedTours;
 		}
 	}
