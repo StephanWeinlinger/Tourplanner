@@ -15,10 +15,10 @@ using System.Windows.Shapes;
 
 namespace Tourplanner.Client.Views {
 	/// <summary>
-	/// Interaktionslogik für SearchBar.xaml
+	/// Interaktionslogik für NavBar.xaml
 	/// </summary>
-	public partial class SearchBar : UserControl {
-		public SearchBar() {
+	public partial class NavBar : UserControl {
+		public NavBar() {
 			InitializeComponent();
 		}
 	}

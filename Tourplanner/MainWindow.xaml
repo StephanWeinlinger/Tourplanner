@@ -6,39 +6,13 @@
         xmlns:local="clr-namespace:Tourplanner.Client.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" MinHeight="300" MinWidth="300" FontSize="14">
-    <DockPanel>
+	<DockPanel>
+		
 		<Menu DockPanel.Dock="Top" FontSize="14">
-			<MenuItem Header="_File">
-				<MenuItem Header="_Import" />
-				<MenuItem Header="_Export" />
-				<MenuItem Header="_Exit" />
-			</MenuItem>
-			<MenuItem Header="_Edit">
-				<MenuItem Header="_Add Tour" Command="{Binding AddTour}" />
-				<MenuItem Header="_Modify Selected Tour" Command="{Binding UpdateTour}" />
-				<MenuItem Header="_Delete Selected Tour" Command="{Binding DeleteTour}" />
-				<MenuItem Header="_Add Log" Command="{Binding AddTourLog}" />
-				<MenuItem Header="_Modify Selected Log" Command="{Binding UpdateTourLog}" />
-				<MenuItem Header="_Delete Selected Log" Command="{Binding DeleteTourLog}" />
-			</MenuItem>
-			<MenuItem Header="_Report">
-				<MenuItem Header="_Create Report Of Selected Tour" Command="{Binding CreateTourRaport}" />
-				<MenuItem Header="_Create Summarized Report" />
-			</MenuItem>
-			<MenuItem Header="_Options">
-				<MenuItem Header="_Lorem ipsum" />
-			</MenuItem>
-			<MenuItem Header="_Help">
-				<MenuItem Header="_Lorem ipsum" />
-			</MenuItem>
+			<local:NavBar x:Name="NavBar" />
 		</Menu>
 		<Grid DockPanel.Dock="Top">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="*" />
-				<ColumnDefinition Width="Auto" />
-			</Grid.ColumnDefinitions>
-			<TextBox Text="Search here" Grid.Column="0"/>
-			<Button Content="Start Searching" Grid.Column="1" Padding="5, 0"/>
+			<local:SearchBar x:Name="SearchBar" />
 		</Grid>
 		<Grid>
 			<Grid.ColumnDefinitions>
@@ -47,13 +21,7 @@
 				<ColumnDefinition Width="*" />
 			</Grid.ColumnDefinitions>
 			<DockPanel Grid.Column="0">
-				<Label Content="Tours" DockPanel.Dock="Top" HorizontalAlignment="Center" />
-				<ListBox>
-					<ListBoxItem Content="Tour 1" />
-					<ListBoxItem Content="Tour 2" />
-					<ListBoxItem Content="Tour 3" />
-					<ListBoxItem Content="..." />
-				</ListBox>
+				<local:TourList x:Name="TourList" />
 			</DockPanel>
 			<GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" />
 			<Grid Grid.Column="2">
@@ -63,7 +31,8 @@
 					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
 				<DockPanel Grid.Row="0">
-					<Label Content="Title: Tour 1" DockPanel.Dock="Top" HorizontalAlignment="Center"/>
+					<local:TourDetails x:Name="TourDetails" />
+					<!--<Label Content="Title: Tour 1" DockPanel.Dock="Top" HorizontalAlignment="Center"/>
 					<TabControl>
 						<TabItem Header="Route">
 							<ScrollViewer HorizontalScrollBarVisibility="Auto">
@@ -105,20 +74,11 @@
 								<TextBlock TextWrapping="WrapWithOverflow" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et" />
 							</ScrollViewer>
 						</TabItem>
-					</TabControl>
+					</TabControl>-->
 				</DockPanel>
 				<GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" />
 				<DockPanel Grid.Row="2">
-					<Label Content="Logs" DockPanel.Dock="Top" HorizontalAlignment="Center" />
-						<DataGrid AutoGenerateColumns="False">
-							<DataGrid.Columns>
-							<DataGridTextColumn Header="Date" Binding="{Binding TourDate}"/>
-							<DataGridTextColumn Header="Total Time" Binding="{Binding TourTimeTotal}"/>
-							<DataGridTextColumn Header="Difficulty" Binding="{Binding TourDifficulty}"/>
-							<DataGridTextColumn Header="Rating" Binding="{Binding TourRating}"/>
-								<DataGridTextColumn Header="Comment" Width="*"/>
-							</DataGrid.Columns>
-						</DataGrid>
+					<local:TourLogs x:Name="TourLogs" />
 				</DockPanel>
 			</Grid>
 		</Grid>

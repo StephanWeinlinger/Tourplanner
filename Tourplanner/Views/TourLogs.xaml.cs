@@ -17,7 +17,7 @@ namespace Tourplanner.Client.Views {
 	/// <summary>
 	/// Interaktionslogik für TourLogs.xaml
 	/// </summary>
-	public partial class TourLogs : Page {
+	public partial class TourLogs : UserControl {
 		public TourLogs() {
 			InitializeComponent();
 		}
