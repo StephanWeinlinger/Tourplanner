@@ -47,7 +47,7 @@ namespace Tourplanner.Server.DAL.DAO {
 		public Log InsertLog(Log newLog) {
 			DbCommand command = _database.CreateCommand(_sqlInsertLog);
 			_database.DefineParameter(command, "TourId", DbType.Int32, newLog.TourId);
-			_database.DefineParameter(command, "Date", DbType.DateTime, newLog.Date);
+			_database.DefineParameter(command, "Date", DbType.Date, newLog.Date.Date);
 			_database.DefineParameter(command, "Comment", DbType.String, newLog.Comment);
 			_database.DefineParameter(command, "Difficulty", DbType.Int32, newLog.Difficulty);
 			_database.DefineParameter(command, "Time", DbType.String, newLog.Time);
@@ -61,7 +61,7 @@ namespace Tourplanner.Server.DAL.DAO {
 		public Log UpdateLog(int id, Log updatedLog) {
 			DbCommand command = _database.CreateCommand(_sqlUpdateLog);
 			_database.DefineParameter(command, "TourId", DbType.Int32, updatedLog.TourId);
-			_database.DefineParameter(command, "Date", DbType.DateTime, updatedLog.Date);
+			_database.DefineParameter(command, "Date", DbType.DateTime, updatedLog.Date.Date);
 			_database.DefineParameter(command, "Comment", DbType.String, updatedLog.Comment);
 			_database.DefineParameter(command, "Difficulty", DbType.Int32, updatedLog.Difficulty);
 			_database.DefineParameter(command, "Time", DbType.String, updatedLog.Time);
