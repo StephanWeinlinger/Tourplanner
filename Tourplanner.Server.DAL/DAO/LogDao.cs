@@ -61,7 +61,7 @@ namespace Tourplanner.Server.DAL.DAO {
 		public Log UpdateLog(int id, Log updatedLog) {
 			DbCommand command = _database.CreateCommand(_sqlUpdateLog);
 			_database.DefineParameter(command, "TourId", DbType.Int32, updatedLog.TourId);
-			_database.DefineParameter(command, "Date", DbType.DateTime, updatedLog.Date.Date);
+			_database.DefineParameter(command, "Date", DbType.Date, updatedLog.Date.Date);
 			_database.DefineParameter(command, "Comment", DbType.String, updatedLog.Comment);
 			_database.DefineParameter(command, "Difficulty", DbType.Int32, updatedLog.Difficulty);
 			_database.DefineParameter(command, "Time", DbType.String, updatedLog.Time);

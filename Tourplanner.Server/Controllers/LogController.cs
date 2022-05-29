@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Windows.Documents;
 using Tourplanner.Server.DAL;
 using Tourplanner.Server.DAL.DAO;
-using Tourplanner.Server.Response;
 using Tourplanner.Shared.Model;
 
 namespace Tourplanner.Server.Controllers {
