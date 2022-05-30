@@ -42,6 +42,9 @@
 				OnPropertyChanged();
 			}
 		}
+		public void AddTour() {
+
+		}
 		// Add Tour von BL mit variablen 
 	}
 }
