@@ -36,10 +36,16 @@ namespace Tourplanner.Server.Controllers {
 			MapQuest mapQuest = DalFactory.GetMapQuest();
 			// map over each entry and query mapquest, add tour and log to database and download image
 			foreach(CombinedTour entry in newCombinedTours) {
+				if(!new List<string>() { "Car", "Bicycle", "Walk" }.Contains(entry.TransportType)) {
+					continue;
+				}
 				MapQuestInformationResponse response = null;
 				try {
 					// query mapquest, on error skip whole entry (continue)
 					response = await mapQuest.GetInformation(entry.From, entry.To, entry.TransportType);
+					if(response.Distance <= 0) {
+						continue;
+					}
 				} catch(Exception e) {
 					continue;
 				}

@@ -25,7 +25,7 @@ namespace Tourplanner.Server.DAL.DAO {
 			DbCommand command = _database.CreateCommand(_sqlGetLogById);
 			_database.DefineParameter(command, "Id", DbType.Int32, id);
 
-			Log log = new Log();
+			Log log = null;
 			using(IDataReader reader = _database.ExecuteReader(command)) {
 				log = ReadLog(reader);
 			}
@@ -80,7 +80,7 @@ namespace Tourplanner.Server.DAL.DAO {
 		}
 
 		private Log ReadLog(IDataReader reader) {
-			Log log = new Log();
+			Log log = null;
 			if(reader != null) {
 				while(reader.Read()) {
 					log = Read(reader);
