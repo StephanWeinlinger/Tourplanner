@@ -11,6 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Tourplanner.Shared.Model\Tourplanner.Shared.Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="assets\map_placeholder.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

@@ -15,8 +15,8 @@
 				<MenuItem Header="_Exit" />
 			</MenuItem>
 			<MenuItem Header="_Edit">
-				<MenuItem Header="_Add Tour" Command="{Binding AddTour}" />
-				<MenuItem Header="_Modify Selected Tour" Command="{Binding UpdateTour}" />
+				<MenuItem Header="_Add Tour"  Click="OpenAddTour" />
+				<MenuItem Header="_Modify Selected Tour"  Click="UpdateAddTour" />
 				<MenuItem Header="_Delete Selected Tour" Command="{Binding DeleteTour}" />
 				<MenuItem Header="_Add Log" Command="{Binding AddTourLog}" />
 				<MenuItem Header="_Modify Selected Log" Command="{Binding UpdateTourLog}" />

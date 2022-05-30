@@ -21,5 +21,14 @@ namespace Tourplanner.Client.Views {
 		public NavBar() {
 			InitializeComponent();
 		}
+
+		private void OpenAddTour(object sender, RoutedEventArgs e) {
+			AddTour NewTour = new AddTour();
+			NewTour.Show();
+		}
+		private void UpdateAddTour(object sender, RoutedEventArgs e) {
+			UpdateTour UpdateTour = new UpdateTour();
+			UpdateTour.Show();
+		}
 	}
 }

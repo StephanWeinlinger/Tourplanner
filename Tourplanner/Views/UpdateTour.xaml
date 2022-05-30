@@ -29,6 +29,6 @@
 			<ComboBoxItem>Walk</ComboBoxItem>
 		</ComboBox>
 
-		<Button Grid.Row="3" Grid.Column="1" Margin="5,5,5,235">Update Tour</Button>
+		<Button Grid.Row="3" Grid.Column="1" Margin="5,5,5,235" Command="{Binding UpdateTour}">Update Tour</Button>
 	</Grid>
 </Window>

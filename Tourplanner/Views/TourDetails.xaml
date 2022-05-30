@@ -27,19 +27,19 @@
 							<RowDefinition Height="Auto" />
 						</Grid.RowDefinitions>
 						<Label Grid.Column="0" Grid.Row="0" Content="From:" />
-						<Label Grid.Column="1" Grid.Row="0" Content="Vienna" />
+						<Label Grid.Column="1" Grid.Row="0" Content="{Binding CurrentFrom}" />
 						<Label Grid.Column="0" Grid.Row="1" Content="To:" />
-						<Label Grid.Column="1" Grid.Row="1" Content="Munich" />
+						<Label Grid.Column="1" Grid.Row="1" Content="{Binding CurrentTo}" />
 						<Label Grid.Column="0" Grid.Row="2" Content="Transport Type:" />
-						<Label Grid.Column="1" Grid.Row="2" Content="Train" />
+						<Label Grid.Column="1" Grid.Row="2" Content="{Binding CurrentTransportType}" />
 						<Label Grid.Column="0" Grid.Row="3" Content="Tour Distance:" />
-						<Label Grid.Column="1" Grid.Row="3" Content="550 km" />
+						<Label Grid.Column="1" Grid.Row="3" Content="{Binding CurrentDistance}" />
 						<Label Grid.Column="0" Grid.Row="4" Content="Estimated Time:" />
-						<Label Grid.Column="1" Grid.Row="4" Content="7 h" />
+						<Label Grid.Column="1" Grid.Row="4" Content="{Binding CurrentEstimatedTime}" />
 						<Label Grid.Column="0" Grid.Row="5" Content="Popularity:" />
-						<Label Grid.Column="1" Grid.Row="5" Content="30 / 100" />
+						<Label Grid.Column="1" Grid.Row="5" Content="{Binding CurrentPopularity}" />
 						<Label Grid.Column="0" Grid.Row="6" Content="Child Friendliness:" />
-						<Label Grid.Column="1" Grid.Row="6" Content="98 / 100" />
+						<Label Grid.Column="1" Grid.Row="6" Content="{Binding CurrentChildFriendliness}" />
 						<Image Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" Source="/assets/map_placeholder.png" Width="500" />
 					</Grid>
 				</ScrollViewer>
