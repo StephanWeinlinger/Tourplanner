@@ -10,6 +10,7 @@
 *.userosscache
 *.sln.docstates
 Tourplanner.Server/App.config
+Tourplanner.Server/Static/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using System.Windows.Documents;
 using Tourplanner.Server.DAL;
 using Tourplanner.Server.DAL.DAO;
-using Tourplanner.Server.Response;
 using Tourplanner.Shared.Model;
 
 namespace Tourplanner.Server.Controllers {
@@ -21,23 +20,35 @@ namespace Tourplanner.Server.Controllers {
 		    List<CombinedTour> combinedTours = new List<CombinedTour>();
 		    TourDao tourDao = DalFactory.CreateTourDao();
 		    List<Tour> tours = new List<Tour>();
-			// check if request includes a filter
-			if(filter == null) {
-				// get all tours
-				tours = tourDao.GetAllTours();
-			} else {
-				// get filtered tours
-				tours = tourDao.GetAllToursWithFilter(filter.ToLower());
-			}
-		    
-			// get all logs for each tour
+		    // check if request includes a filter
+		    if(filter == null) {
+			    // get all tours
+			    tours = tourDao.GetAllTours();
+		    } else {
+			    // get filtered tours
+			    tours = tourDao.GetAllToursWithFilter(filter.ToLower());
+		    }
+
+		    // get all logs for each tour
 		    foreach(Tour entry in tours) {
-				LogDao logDao = DalFactory.CreateLogDao();
-				List<Log> logs = logDao.GetAllLogsWithTourId(entry.Id);
-				// add entry and logs to combindedTours
-				combinedTours.Add(new CombinedTour(entry, logs));
-			}
+			    LogDao logDao = DalFactory.CreateLogDao();
+			    List<Log> logs = logDao.GetAllLogsWithTourId(entry.Id);
+			    // add entry and logs to combindedTours
+			    combinedTours.Add(new CombinedTour(entry, logs));
+		    }
 		    return combinedTours;
+	    }
+
+		[HttpGet("{id}")]
+	    public async Task<ActionResult<CombinedTour>> GetCombinedTour(int id) {
+		    TourDao tourDao = DalFactory.CreateTourDao();
+		    Tour tour = tourDao.GetTourById(id);
+
+		    // get all logs for tour
+		    LogDao logDao = DalFactory.CreateLogDao();
+		    List<Log> logs = logDao.GetAllLogsWithTourId(tour.Id);
+
+		    return new CombinedTour(tour, logs);
 	    }
 
 	    [HttpPost]
@@ -111,7 +122,6 @@ namespace Tourplanner.Server.Controllers {
 
 			Filesystem filesystem = DalFactory.GetFilesystem();
 			filesystem.RemoveImage(id);
-			filesystem.RemoveAllImages();
 			return Ok();
 	    }
 	}
