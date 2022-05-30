@@ -30,5 +30,14 @@ namespace Tourplanner.Client.Views {
 			UpdateTour UpdateTour = new UpdateTour();
 			UpdateTour.Show();
 		}
+		private void AddLog(object sender, RoutedEventArgs e) {
+			AddLog AddLog = new AddLog();
+			AddLog.Show();
+		}
+
+		private void UpdateLog(object sender, RoutedEventArgs e) {
+			UpdateLog UpdateLog = new UpdateLog();
+			UpdateLog.Show();
+		}
 	}
 }

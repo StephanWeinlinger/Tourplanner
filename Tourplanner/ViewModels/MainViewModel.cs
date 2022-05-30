@@ -18,9 +18,13 @@ namespace Tourplanner.Client.ViewModels {
 		private readonly TourLogsViewModel _tourLogsViewModel;
 		private readonly NavBarViewModel _navBarViewModel;
 
-		public ObservableCollection<Tour> Tour { get; set; }
+		public ObservableCollection<List<CombinedTour>> Tours { get; set; }
 
 		public MainViewModel(SearchBarViewModel _searchBarViewModel, TourListViewModel _tourListViewModel, TourDetailsViewModel _tourDetailsViewModel, TourLogsViewModel _tourLogsViewModel, NavBarViewModel _navBarViewModel) {
+
+
+			// fetch tours from database 
+
 
 			//initialize of Sub-ViewModels
 			this._searchBarViewModel = _searchBarViewModel;
@@ -28,7 +32,8 @@ namespace Tourplanner.Client.ViewModels {
 			this._tourListViewModel = _tourListViewModel;
 			this._tourDetailsViewModel = _tourDetailsViewModel;
 			this._tourLogsViewModel = _tourLogsViewModel;
-
+			
+			// observeble collection übergeben google 
 
 		}
 
