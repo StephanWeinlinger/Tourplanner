@@ -43,7 +43,9 @@ namespace Tourplanner.Server.Controllers {
 	    public async Task<ActionResult<CombinedTour>> GetCombinedTour(int id) {
 		    TourDao tourDao = DalFactory.CreateTourDao();
 		    Tour tour = tourDao.GetTourById(id);
-
+			if(tour == null) {
+				return null;
+			}
 		    // get all logs for tour
 		    LogDao logDao = DalFactory.CreateLogDao();
 		    List<Log> logs = logDao.GetAllLogsWithTourId(tour.Id);
@@ -56,6 +58,9 @@ namespace Tourplanner.Server.Controllers {
 		    if(!ModelState.IsValid) {
 			    return BadRequest(ModelState);
 		    }
+			if(!new List<string>() { "Car", "Bicycle", "Walk" }.Contains(newTour.TransportType)) {
+				return BadRequest(new CustomResponse(false, new Dictionary<string, string> { { "Custom", "TransportType is invalid" } }));
+			}
 
 		    try {
 			    // get information from mapquest
@@ -64,7 +69,9 @@ namespace Tourplanner.Server.Controllers {
 				    await mapQuest.GetInformation(newTour.From, newTour.To, newTour.TransportType);
 				newTour.Distance = response.Distance;
 				newTour.Time = response.FormattedTime;
-
+				if(newTour.Distance <= 0) {
+					return BadRequest(new CustomResponse(false, new Dictionary<string, string> { { "Custom", "Error when calculating tour data" } }));
+				}
 				// insert tour in database
 			    TourDao tourDao = DalFactory.CreateTourDao();
 			    Tour tour = tourDao.InsertTour(newTour);
@@ -88,6 +95,9 @@ namespace Tourplanner.Server.Controllers {
 		    if(!ModelState.IsValid) {
 			    return BadRequest(ModelState);
 		    }
+			if(!new List<string>() { "Car", "Bicycle", "Walk" }.Contains(newTour.TransportType)) {
+				return BadRequest(new CustomResponse(false, new Dictionary<string, string> { { "Custom", "TransportType is invalid" } }));
+			}
 
 			try {
 				// get information from mapquest
@@ -96,11 +106,15 @@ namespace Tourplanner.Server.Controllers {
 					await mapQuest.GetInformation(newTour.From, newTour.To, newTour.TransportType);
 				newTour.Distance = response.Distance;
 				newTour.Time = response.FormattedTime;
-
+				if(newTour.Distance <= 0) {
+					return BadRequest(new CustomResponse(false, new Dictionary<string, string> { { "Custom", "Error when calculating tour data" } }));
+				}
 				// update tour in database
 				TourDao tourDao = DalFactory.CreateTourDao();
 				Tour tour = tourDao.UpdateTour(id, newTour);
-
+				if(tour == null) {
+					return null;
+				}
 				// get image link from mapquest
 				string url = mapQuest.GetMap(response.SessionId);
 				// download image to filesystem

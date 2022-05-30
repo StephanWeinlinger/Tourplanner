@@ -35,7 +35,7 @@ namespace Tourplanner.Server.DAL.DAO {
 			DbCommand command = _database.CreateCommand(_sqlGetTourById);
 			_database.DefineParameter(command, "Id", DbType.Int32, id);
 
-			Tour tour = new Tour();
+			Tour tour = null;
 			using(IDataReader reader = _database.ExecuteReader(command)) {
 				tour = ReadTour(reader);
 			}
@@ -111,7 +111,7 @@ namespace Tourplanner.Server.DAL.DAO {
 		}
 
 		private Tour ReadTour(IDataReader reader) {
-			Tour tour = new Tour();
+			Tour tour = null;
 			if(reader != null) {
 				while(reader.Read()) {
 					tour = Read(reader);
