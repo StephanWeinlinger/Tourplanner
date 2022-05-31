@@ -9,7 +9,7 @@ using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
 namespace Tourplanner.Client.BL {
 	public class FileExplorer {
-		public string SelectFolder() {
+		public string SelectFile() {
 			OpenFileDialog openFileDialog = new OpenFileDialog();
 			if(openFileDialog.ShowDialog() == true) {
 				return openFileDialog.FileName;
@@ -17,7 +17,7 @@ namespace Tourplanner.Client.BL {
 			return null;
 		}
 
-		public string SelectFile() {
+		public string SelectFolder() {
 			using FolderBrowserDialog dialog = new FolderBrowserDialog {
 				Description = "Select Folder", UseDescriptionForTitle = true, ShowNewFolderButton = true
 			};

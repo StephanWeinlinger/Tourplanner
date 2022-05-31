@@ -23,7 +23,7 @@
 				<MenuItem Header="_Delete Selected Log" Command="{Binding DeleteTourLog}" />
 			</MenuItem>
 			<MenuItem Header="_Report">
-				<MenuItem Header="_Create Report Of Selected Tour" Command="{Binding CreateTourRaport}" />
+				<MenuItem Header="_Create Report Of Selected Tour" Command="{Binding CreateTourReport}" />
 				<MenuItem Header="_Create Summarized Report" />
 			</MenuItem>
 			<MenuItem Header="_Options">

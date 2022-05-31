@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Tourplanner.Client.BL;
 using Tourplanner.Client.BL.Controllers;
 using Tourplanner.Shared.Model;
 
@@ -43,17 +44,19 @@ namespace Tourplanner.Client.Views {
 		}
 
 		private void Import(object sender, RoutedEventArgs e) {
-			ImportController import;
-			import = new ImportController();
-			Task.Run<List<CombinedTour>>(async () => await import.ImportTours());
-			
+			// select file
+			FileExplorer fileExplorer = BlFactory.GetFileExplorer();
+			string path = fileExplorer.SelectFile();
+			ImportController import = new ImportController();
+			Task.Run<List<CombinedTour>>(async () => await import.ImportTours(path));
 		}
 
 		private void Export(object sender, RoutedEventArgs e) {
-			ImportController export;
-			export = new ImportController();
-			Task.Run<bool>(async () => await export.ExportTours());
-
+			// select folder
+			FileExplorer fileExplorer = BlFactory.GetFileExplorer();
+			string path = fileExplorer.SelectFolder();
+			ImportController export = new ImportController();
+			Task.Run<bool>(async () => await export.ExportTours(path));
 		}
 
 		
