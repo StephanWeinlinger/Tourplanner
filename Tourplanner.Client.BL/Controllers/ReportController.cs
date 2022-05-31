@@ -28,9 +28,7 @@ namespace Tourplanner.Client.BL.Controllers {
             return true;
         }
 
-        public async Task<bool> GenerateSummarizedReport() {
-			// get folder
-			string path = _fileExplorer.SelectFolder();
+        public async Task<bool> GenerateSummarizedReport(string path) {
             // get newest version of tours
             List<CombinedTour> tours = await _apiHandler.Get<List<CombinedTour>>($"Tour");
             PdfHandler pdfHandler = BlFactory.CreatePdfHandler($"{path}/tours_report.pdf");

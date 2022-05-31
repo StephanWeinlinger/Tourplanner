@@ -43,20 +43,28 @@ namespace Tourplanner.Client.Views {
 			UpdateLog.Show();
 		}
 
+		private void CreateSummarizedReport(object sender, RoutedEventArgs e) {
+			// select folder
+			FileExplorer fileExplorer = BlFactory.GetFileExplorer();
+			string path = fileExplorer.SelectFolder();
+			ReportController reportController = new ReportController();
+			Task.Run<bool>(async () => await reportController.GenerateSummarizedReport(path));
+		}
+
 		private void Import(object sender, RoutedEventArgs e) {
 			// select file
 			FileExplorer fileExplorer = BlFactory.GetFileExplorer();
 			string path = fileExplorer.SelectFile();
-			ImportController import = new ImportController();
-			Task.Run<List<CombinedTour>>(async () => await import.ImportTours(path));
+			ImportController importController = new ImportController();
+			Task.Run<List<CombinedTour>>(async () => await importController.ImportTours(path));
 		}
 
 		private void Export(object sender, RoutedEventArgs e) {
 			// select folder
 			FileExplorer fileExplorer = BlFactory.GetFileExplorer();
 			string path = fileExplorer.SelectFolder();
-			ImportController export = new ImportController();
-			Task.Run<bool>(async () => await export.ExportTours(path));
+			ImportController importController = new ImportController();
+			Task.Run<bool>(async () => await importController.ExportTours(path));
 		}
 
 		
