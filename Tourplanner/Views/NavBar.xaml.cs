@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Tourplanner.Client.BL.Controllers;
+using Tourplanner.Shared.Model;
 
 namespace Tourplanner.Client.Views {
 	/// <summary>
@@ -39,5 +41,21 @@ namespace Tourplanner.Client.Views {
 			UpdateLog UpdateLog = new UpdateLog();
 			UpdateLog.Show();
 		}
+
+		private void Import(object sender, RoutedEventArgs e) {
+			ImportController import;
+			import = new ImportController();
+			Task.Run<List<CombinedTour>>(async () => await import.ImportTours());
+			
+		}
+
+		private void Export(object sender, RoutedEventArgs e) {
+			ImportController export;
+			export = new ImportController();
+			Task.Run<bool>(async () => await export.ExportTours());
+
+		}
+
+		
 	}
 }

@@ -13,4 +13,8 @@
     <ProjectReference Include="..\Tourplanner.Shared.Model\Tourplanner.Shared.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Static\" />
+  </ItemGroup>
+
 </Project>

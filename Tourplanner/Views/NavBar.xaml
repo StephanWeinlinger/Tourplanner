@@ -27,8 +27,8 @@
 				<MenuItem Header="_Create Summarized Report" />
 			</MenuItem>
 			<MenuItem Header="_Options">
-				<MenuItem Header="_Import" />
-				<MenuItem Header="_Export" />
+				<MenuItem Header="_Import" Click="Import" />
+				<MenuItem Header="_Export" Click="Export" />
 			</MenuItem>
 			<MenuItem Header="_Help">
 				<MenuItem Header="_Lorem ipsum" />
