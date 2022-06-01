@@ -9,7 +9,33 @@
 	<DockPanel>
 		
 		<Menu DockPanel.Dock="Top" FontSize="14">
-			<local:NavBar x:Name="NavBar" />
+		<!--	<local:NavBar x:Name="NavBar" /> -->
+			<Menu DockPanel.Dock="Top" FontSize="14">
+				<MenuItem Header="_File">
+					<MenuItem Header="_Import" />
+					<MenuItem Header="_Export" />
+					<MenuItem Header="_Exit" />
+				</MenuItem>
+				<MenuItem Header="_Edit">
+					<MenuItem Header="_Add Tour"  Click="OpenAddTour" />
+					<MenuItem Header="_Modify Selected Tour"  Click="UpdateAddTour" />
+					<MenuItem Header="_Delete Selected Tour" Command="{Binding DeleteTour}" />
+					<MenuItem Header="_Add Log" Command="{Binding AddTourLog}" Click="AddLog" />
+					<MenuItem Header="_Modify Selected Log" Command="{Binding UpdateTourLog}" Click="UpdateLog" />
+					<MenuItem Header="_Delete Selected Log" Command="{Binding DeleteTourLog}" />
+				</MenuItem>
+				<MenuItem Header="_Report">
+					<MenuItem Header="_Create Report Of Selected Tour"/>
+					<MenuItem Header="_Create Summarized Report" Click="CreateSummarizedReport"/>
+				</MenuItem>
+				<MenuItem Header="_Options">
+					<MenuItem Header="_Import" Click="Import" />
+					<MenuItem Header="_Export" Click="Export" />
+				</MenuItem>
+				<MenuItem Header="_Help">
+					<MenuItem Header="_Lorem ipsum" />
+				</MenuItem>
+			</Menu>
 		</Menu>
 		<Grid DockPanel.Dock="Top">
 			<local:SearchBar x:Name="SearchBar" />
@@ -21,7 +47,13 @@
 				<ColumnDefinition Width="*" />
 			</Grid.ColumnDefinitions>
 			<DockPanel Grid.Column="0">
-				<local:TourList x:Name="TourList" />
+				<Label Content="Tours" DockPanel.Dock="Top" HorizontalAlignment="Center" />
+				<ListBox>
+					<ListBoxItem Content="Tour 1" />
+					<ListBoxItem Content="Tour 2" />
+					<ListBoxItem Content="Tour 3" />
+					<ListBoxItem Content="..." />
+				</ListBox>
 			</DockPanel>
 			<GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" />
 			<Grid Grid.Column="2">
@@ -32,7 +64,49 @@
 				</Grid.RowDefinitions>
 				<DockPanel Grid.Row="0">
 					<Label Content="Title: Tour 1" DockPanel.Dock="Top" HorizontalAlignment="Center"/>
-					<local:TourDetails x:Name="TourDetails" />
+					<!--<local:TourDetails x:Name="TourDetails" /> -->
+					<TabControl>
+						<TabItem Header="Route">
+							<ScrollViewer HorizontalScrollBarVisibility="Auto">
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="Auto" />
+										<ColumnDefinition Width="*" />
+									</Grid.ColumnDefinitions>
+									<Grid.RowDefinitions>
+										<RowDefinition Height="Auto" />
+										<RowDefinition Height="Auto" />
+										<RowDefinition Height="Auto" />
+										<RowDefinition Height="Auto" />
+										<RowDefinition Height="Auto" />
+										<RowDefinition Height="Auto" />
+										<RowDefinition Height="Auto" />
+										<RowDefinition Height="Auto" />
+									</Grid.RowDefinitions>
+									<Label Grid.Column="0" Grid.Row="0" Content="From:" />
+									<Label Grid.Column="1" Grid.Row="0" Content="{Binding CurrentFrom}" />
+									<Label Grid.Column="0" Grid.Row="1" Content="To:" />
+									<Label Grid.Column="1" Grid.Row="1" Content="{Binding CurrentTo}" />
+									<Label Grid.Column="0" Grid.Row="2" Content="Transport Type:" />
+									<Label Grid.Column="1" Grid.Row="2" Content="{Binding CurrentTransportType}" />
+									<Label Grid.Column="0" Grid.Row="3" Content="Tour Distance:" />
+									<Label Grid.Column="1" Grid.Row="3" Content="{Binding CurrentDistance}" />
+									<Label Grid.Column="0" Grid.Row="4" Content="Estimated Time:" />
+									<Label Grid.Column="1" Grid.Row="4" Content="{Binding CurrentEstimatedTime}" />
+									<Label Grid.Column="0" Grid.Row="5" Content="Popularity:" />
+									<Label Grid.Column="1" Grid.Row="5" Content="{Binding CurrentPopularity}" />
+									<Label Grid.Column="0" Grid.Row="6" Content="Child Friendliness:" />
+									<Label Grid.Column="1" Grid.Row="6" Content="{Binding CurrentChildFriendliness}" />
+									<Image Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" Source="/assets/map_placeholder.png" Width="500" />
+								</Grid>
+							</ScrollViewer>
+						</TabItem>
+						<TabItem Header="Description">
+							<ScrollViewer VerticalScrollBarVisibility="Auto">
+								<TextBlock TextWrapping="WrapWithOverflow" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et" />
+							</ScrollViewer>
+						</TabItem>
+					</TabControl>
 				</DockPanel>
 				<GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" />
 				<DockPanel Grid.Row="2">

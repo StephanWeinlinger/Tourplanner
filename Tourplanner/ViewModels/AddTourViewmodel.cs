@@ -1,4 +1,8 @@
-﻿namespace Tourplanner.Client.ViewModels {
+﻿using System.Threading.Tasks;
+using Tourplanner.Client.BL.Controllers;
+using Tourplanner.Shared.Model;
+
+namespace Tourplanner.Client.ViewModels {
 	class AddTourViewmodel : BaseViewModel  {
 
 		private string _tourNameInput;
@@ -43,6 +47,9 @@
 			}
 		}
 		public void AddTour() {
+			TourController tourcontroller = new TourController();
+			Tour NewTour = new Tour(TourTitle, TourDescription, FromInput, ToInput,"car");
+			Task.Run<CombinedTour>(async () => await tourcontroller.InsertTour(NewTour));
 
 		}
 		// Add Tour von BL mit variablen 

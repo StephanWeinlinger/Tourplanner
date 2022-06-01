@@ -11,6 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Tourplanner.Client.BL.Controllers;
+using Tourplanner.Client.ViewModels;
+using Tourplanner.Shared.Model;
 
 namespace Tourplanner.Client.Views {
 	/// <summary>
@@ -19,6 +22,7 @@ namespace Tourplanner.Client.Views {
 	public partial class AddTour : Window {
 		public AddTour() {
 			InitializeComponent();
+			
 		}
 	}
 }
