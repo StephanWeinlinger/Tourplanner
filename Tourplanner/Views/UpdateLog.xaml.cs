@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Tourplanner.Client.ViewModels;
 
 namespace Tourplanner.Client.Views {
 	/// <summary>
@@ -19,6 +20,7 @@ namespace Tourplanner.Client.Views {
 	public partial class UpdateLog : Window {
 		public UpdateLog() {
 			InitializeComponent();
+			DataContext = new UpdateLogViewModel();
 		}
 	}
 }

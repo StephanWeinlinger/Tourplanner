@@ -3,19 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
+using Tourplanner.Client.BL.Controllers;
+using Tourplanner.Shared.Model;
 
 namespace Tourplanner.Client.ViewModels {
 	class UpdateLogViewModel : BaseViewModel {
-		private string _currentDate;
+		
+		private DateTime _currentDate;
 		private string _currentComment;
-		private string _currentDifficulty;
+		private int _currentDifficulty;
 		private string _currentTime;
-		private string _currentRating;
+		private int _currentRating;
+
+		public ICommand UpdateLogDB { get; set; }
 
 		private string _currentPopularity;
 		private string _currentChildFriendlyness;
 
-		public string CurrentLogDate {
+		public DateTime CurrentLogDate {
 			get { return _currentDate; }
 			set {
 				_currentDate = value;
@@ -31,7 +38,7 @@ namespace Tourplanner.Client.ViewModels {
 			}
 		}
 
-		public string CurrentLogDifficulty {
+		public int CurrentLogDifficulty {
 			get { return _currentDifficulty; }
 			set {
 				_currentDifficulty = value;
@@ -47,7 +54,7 @@ namespace Tourplanner.Client.ViewModels {
 			}
 		}
 
-		public string CurrentLogRating {
+		public int CurrentLogRating {
 			get { return _currentRating; }
 			set {
 				_currentRating = value;
@@ -55,5 +62,17 @@ namespace Tourplanner.Client.ViewModels {
 			}
 		}
 
+		public void UpdateLog() {
+			LogController logcontroller = new LogController();
+			Log NewLog = new Log(50, CurrentLogDate, CurrentLogComment, CurrentLogDifficulty, CurrentLogTime, CurrentLogRating);
+			Task.Run<Log>(async () => await logcontroller.UpdateLog(31,NewLog));
+			MessageBox.Show("Log was sucsessfully updated", "Update your Log");
+		}
+
+		public UpdateLogViewModel() {
+			UpdateLogDB = new RelayCommand((sender) => {
+				UpdateLog();
+			});
+		}
 	}
 }

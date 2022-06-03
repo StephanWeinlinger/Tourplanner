@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Tourplanner.Client.BL;
 using Tourplanner.Client.BL.Controllers;
+using Tourplanner.Client.ViewModels;
 using Tourplanner.Client.Views;
 using Tourplanner.Shared.Model;
 
@@ -23,8 +24,18 @@ namespace Tourplanner.Client {
     /// </summary>
     public partial class MainWindow : Window {
         public MainWindow() {
-            InitializeComponent();
-        }
+
+			var searchBarViewModel = new SearchBarViewModel();
+			var addLogViewModel = new AddLogViewModel();
+			var addTourViewmodel = new AddTourViewmodel();
+			var updateLogViewModel = new UpdateLogViewModel();
+			var updateTourViewModel = new UpdateTourViewModel();
+
+			InitializeComponent();
+			DataContext = new MainViewModel(searchBarViewModel, addLogViewModel, addTourViewmodel, updateLogViewModel, updateTourViewModel);
+			
+		}
+		
 
 		private void OpenAddTour(object sender, RoutedEventArgs e) {
 			AddTour NewTour = new AddTour();
@@ -42,30 +53,6 @@ namespace Tourplanner.Client {
 		private void UpdateLog(object sender, RoutedEventArgs e) {
 			UpdateLog UpdateLog = new UpdateLog();
 			UpdateLog.Show();
-		}
-
-		private void CreateSummarizedReport(object sender, RoutedEventArgs e) {
-			// select folder
-			FileExplorer fileExplorer = BlFactory.GetFileExplorer();
-			string path = fileExplorer.SelectFolder();
-			ReportController reportController = new ReportController();
-			Task.Run<bool>(async () => await reportController.GenerateSummarizedReport(path));
-		}
-
-		private void Import(object sender, RoutedEventArgs e) {
-			// select file
-			FileExplorer fileExplorer = BlFactory.GetFileExplorer();
-			string path = fileExplorer.SelectFile();
-			ImportController importController = new ImportController();
-			Task.Run<List<CombinedTour>>(async () => await importController.ImportTours(path));
-		}
-
-		private void Export(object sender, RoutedEventArgs e) {
-			// select folder
-			FileExplorer fileExplorer = BlFactory.GetFileExplorer();
-			string path = fileExplorer.SelectFolder();
-			ImportController importController = new ImportController();
-			Task.Run<bool>(async () => await importController.ExportTours(path));
 		}
 	}
 }

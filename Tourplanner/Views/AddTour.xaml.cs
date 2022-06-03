@@ -22,7 +22,7 @@ namespace Tourplanner.Client.Views {
 	public partial class AddTour : Window {
 		public AddTour() {
 			InitializeComponent();
-			
+			DataContext = new AddTourViewmodel();
 		}
 	}
 }

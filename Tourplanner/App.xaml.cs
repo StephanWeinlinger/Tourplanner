@@ -15,17 +15,18 @@ namespace Tourplanner {
     public partial class App : Application {
 
 		private void App_OnStartup(object sender, StartupEventArgs e) {
+			
 			var searchBarViewModel = new SearchBarViewModel();
-			
-			var tourLogsViewModel = new TourLogsViewModel();
-			
 			var addLogViewModel = new AddLogViewModel();
-			var addTourViewmodel = new AddTourViewmodel();
 			var updateLogViewModel = new UpdateLogViewModel();
+			var addTourViewmodel = new AddTourViewmodel();
+			var updateTourViewModel = new UpdateTourViewModel();
 
 			//MVVM:
 			var wnd = new MainWindow {
-				DataContext = new MainViewModel(searchBarViewModel, tourLogsViewModel,  addLogViewModel, addTourViewmodel, updateLogViewModel)
+				DataContext = new MainViewModel(searchBarViewModel, addLogViewModel, addTourViewmodel, updateLogViewModel, updateTourViewModel),
+				AddTourUI = { DataContext = addTourViewmodel },
+				//UpdateTourUI = { DataContext = updateTourViewModel }
 			};
 
 			wnd.Show();

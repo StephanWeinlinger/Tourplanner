@@ -3,40 +3,36 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Tourplanner.Client.Views"
-        mc:Ignorable="d"
+        xmlns:local="clr-namespace:Tourplanner.Client.Views" xmlns:viewmodels="clr-namespace:Tourplanner.Client.ViewModels" 
+		d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+		mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" MinHeight="300" MinWidth="300" FontSize="14">
 	<DockPanel>
-		
 		<Menu DockPanel.Dock="Top" FontSize="14">
-		<!--	<local:NavBar x:Name="NavBar" /> -->
-			<Menu DockPanel.Dock="Top" FontSize="14">
 				<MenuItem Header="_File">
 					<MenuItem Header="_Import" />
 					<MenuItem Header="_Export" />
 					<MenuItem Header="_Exit" />
 				</MenuItem>
 				<MenuItem Header="_Edit">
-					<MenuItem Header="_Add Tour"  Click="OpenAddTour" />
-					<MenuItem Header="_Modify Selected Tour"  Click="UpdateAddTour" />
-					<MenuItem Header="_Delete Selected Tour" Command="{Binding DeleteTour}" />
-					<MenuItem Header="_Add Log" Command="{Binding AddTourLog}" Click="AddLog" />
-					<MenuItem Header="_Modify Selected Log" Command="{Binding UpdateTourLog}" Click="UpdateLog" />
+				<MenuItem Header="_Add Tour"  Click="OpenAddTour"  x:Name="AddTourUI" />
+				<MenuItem Header="_Modify Selected Tour" Click="UpdateAddTour"  x:Name="UpdateTourUI"  />
+				<MenuItem Header="_Delete Selected Tour" Command="{Binding DeleteTour}" />
+					<MenuItem Header="_Add Log"  Click="AddLog" />
+					<MenuItem Header="_Modify Selected Log"  Click="UpdateLog" />
 					<MenuItem Header="_Delete Selected Log" Command="{Binding DeleteTourLog}" />
 				</MenuItem>
 				<MenuItem Header="_Report">
-					<MenuItem Header="_Create Report Of Selected Tour"/>
-					<MenuItem Header="_Create Summarized Report" Click="CreateSummarizedReport"/>
+				<MenuItem Header="_Create Report Of Selected Tour" Command="{Binding CreateRaportSelected}"/>
+				<MenuItem Header="_Create Summarized Report"  Command="{Binding CreateRaportSummarized}"/>
 				</MenuItem>
 				<MenuItem Header="_Options">
-					<MenuItem Header="_Import" Click="Import" />
-					<MenuItem Header="_Export" Click="Export" />
+				<MenuItem Header="_Import" Command="{Binding Import}" />
+				<MenuItem Header="_Export"  Command="{Binding Export}" />
 				</MenuItem>
-				<MenuItem Header="_Help">
-					<MenuItem Header="_Lorem ipsum" />
-				</MenuItem>
-			</Menu>
+			<MenuItem Header="_About" Command="{Binding AboutClicked}"/>
 		</Menu>
+		
 		<Grid DockPanel.Dock="Top">
 			<local:SearchBar x:Name="SearchBar" />
 		</Grid>
@@ -49,7 +45,7 @@
 			<DockPanel Grid.Column="0">
 				<Label Content="Tours" DockPanel.Dock="Top" HorizontalAlignment="Center" />
 				<ListBox>
-					<ListBoxItem Content="Tour 1" />
+					<ListBoxItem Content="{Binding CurrentName}" /> <!-- ListView statt listbox-->
 					<ListBoxItem Content="Tour 2" />
 					<ListBoxItem Content="Tour 3" />
 					<ListBoxItem Content="..." />
@@ -64,7 +60,6 @@
 				</Grid.RowDefinitions>
 				<DockPanel Grid.Row="0">
 					<Label Content="Title: Tour 1" DockPanel.Dock="Top" HorizontalAlignment="Center"/>
-					<!--<local:TourDetails x:Name="TourDetails" /> -->
 					<TabControl>
 						<TabItem Header="Route">
 							<ScrollViewer HorizontalScrollBarVisibility="Auto">
@@ -110,7 +105,16 @@
 				</DockPanel>
 				<GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" />
 				<DockPanel Grid.Row="2">
-					<local:TourLogs x:Name="TourLogs" />
+					<Label Content="Logs" DockPanel.Dock="Top" HorizontalAlignment="Center" />
+					<DataGrid AutoGenerateColumns="False">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Date"/>
+							<DataGridTextColumn Header="Total Time"/>
+							<DataGridTextColumn Header="Difficulty"/>
+							<DataGridTextColumn Header="Rating"/>
+							<DataGridTextColumn Header="Comment" Width="*"/>
+						</DataGrid.Columns>
+					</DataGrid>
 				</DockPanel>
 			</Grid>
 		</Grid>

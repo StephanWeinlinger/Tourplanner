@@ -1,20 +1,22 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Tourplanner.Client.BL.Controllers;
-using Tourplanner.Client.ViewModels;
 using Tourplanner.Shared.Model;
 
 namespace Tourplanner.Client.ViewModels {
-	internal class AddTourViewmodel : BaseViewModel {
-
+	class UpdateTourViewModel : BaseViewModel{
 		private string _tourNameInput;
 		private string _tourDescriptionInput;
 		private string _fromInput;
 		private string _toInput;
 		private string _transportType;
 
-		public ICommand AddTourtoDB { get; set; }
+		public ICommand UpdateTourDB { get; set; }
 
 		public string TourTitle {
 			get { return _tourNameInput; }
@@ -51,20 +53,21 @@ namespace Tourplanner.Client.ViewModels {
 				OnPropertyChanged();
 			}
 		}
-		
-		public void AddTour() {
+		public void UpdateTour() {
 			TourController tourcontroller = new TourController();
 			Tour NewTour = new Tour(TourTitle, TourDescription, FromInput, ToInput, TransportationType);
-			Task.Run<CombinedTour>(async () => await tourcontroller.InsertTour(NewTour));
-			MessageBox.Show("Tour was sucsessfully added", "Add your Tour");
+			Task.Run<CombinedTour>(async () => await tourcontroller.UpdateTour(53,NewTour));
+			MessageBox.Show("Tour was sucsessfully updated", "Update your Tour");
 
 		}
 
-		
-		public AddTourViewmodel() {
-			AddTourtoDB = new RelayCommand((sender) => {
-				AddTour();
+		public UpdateTourViewModel() {
+			UpdateTourDB = new RelayCommand((sender) => {
+				MessageBox.Show("Siu", "Update your Tour");
+
+				UpdateTour();
 			});
 		}
+
 	}
 }

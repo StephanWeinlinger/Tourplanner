@@ -18,9 +18,7 @@ namespace Tourplanner.Client.BL.Controllers {
             _fileExplorer = BlFactory.GetFileExplorer();
         }
 
-        public async Task<bool> GenerateTourReport(int id) {
-			// get folder
-			string path = _fileExplorer.SelectFolder();
+        public async Task<bool> GenerateTourReport(int id, string path) {
             // get newest version of tour
             CombinedTour tour = await _apiHandler.Get<CombinedTour>($"Tour/{id}");
             PdfHandler pdfHandler = BlFactory.CreatePdfHandler($"{path}/tour{id}_report.pdf");

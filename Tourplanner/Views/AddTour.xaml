@@ -36,6 +36,6 @@
 			<ComboBoxItem>Walk</ComboBoxItem>
 		</ComboBox>
 
-		<Button Grid.Row="6" Grid.Column="1" Margin="5,5,5,235" Command="{Binding AddTour}">Add Tour</Button>
+		<Button Grid.Row="6" Grid.Column="1" Margin="5,5,5,235" Command="{Binding AddTourtoDB}">Add Tour</Button>
 	</Grid>
 </Window>
