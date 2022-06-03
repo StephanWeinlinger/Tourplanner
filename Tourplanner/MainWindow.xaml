@@ -44,11 +44,12 @@
 			</Grid.ColumnDefinitions>
 			<DockPanel Grid.Column="0">
 				<Label Content="Tours" DockPanel.Dock="Top" HorizontalAlignment="Center" />
-				<ListBox>
-					<ListBoxItem Content="{Binding CurrentName}" /> <!-- ListView statt listbox-->
-					<ListBoxItem Content="Tour 2" />
-					<ListBoxItem Content="Tour 3" />
-					<ListBoxItem Content="..." />
+				<ListBox ItemsSource="{Binding Tours}" SelectedIndex="{Binding SelectedIndex}">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding Title}"/>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
 				</ListBox>
 			</DockPanel>
 			<GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" />
@@ -58,8 +59,8 @@
 					<RowDefinition Height="5" />
 					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
-				<DockPanel Grid.Row="0">
-					<Label Content="Title: Tour 1" DockPanel.Dock="Top" HorizontalAlignment="Center"/>
+				<DockPanel Grid.Row="0" >
+					<Label Content="{Binding Title}" DockPanel.Dock="Top" HorizontalAlignment="Center"/>
 					<TabControl>
 						<TabItem Header="Route">
 							<ScrollViewer HorizontalScrollBarVisibility="Auto">
@@ -79,15 +80,15 @@
 										<RowDefinition Height="Auto" />
 									</Grid.RowDefinitions>
 									<Label Grid.Column="0" Grid.Row="0" Content="From:" />
-									<Label Grid.Column="1" Grid.Row="0" Content="{Binding CurrentFrom}" />
+									<Label Grid.Column="1" Grid.Row="0" Content="{Binding TourFrom}" />
 									<Label Grid.Column="0" Grid.Row="1" Content="To:" />
-									<Label Grid.Column="1" Grid.Row="1" Content="{Binding CurrentTo}" />
+									<Label Grid.Column="1" Grid.Row="1" Content="{Binding TourTo}" />
 									<Label Grid.Column="0" Grid.Row="2" Content="Transport Type:" />
-									<Label Grid.Column="1" Grid.Row="2" Content="{Binding CurrentTransportType}" />
+									<Label Grid.Column="1" Grid.Row="2" Content="{Binding TourTransportationType}" />
 									<Label Grid.Column="0" Grid.Row="3" Content="Tour Distance:" />
-									<Label Grid.Column="1" Grid.Row="3" Content="{Binding CurrentDistance}" />
+									<Label Grid.Column="1" Grid.Row="3" Content="{Binding TourDistance}" />
 									<Label Grid.Column="0" Grid.Row="4" Content="Estimated Time:" />
-									<Label Grid.Column="1" Grid.Row="4" Content="{Binding CurrentEstimatedTime}" />
+									<Label Grid.Column="1" Grid.Row="4" Content="{Binding TourTime}" />
 									<Label Grid.Column="0" Grid.Row="5" Content="Popularity:" />
 									<Label Grid.Column="1" Grid.Row="5" Content="{Binding CurrentPopularity}" />
 									<Label Grid.Column="0" Grid.Row="6" Content="Child Friendliness:" />
@@ -96,9 +97,9 @@
 								</Grid>
 							</ScrollViewer>
 						</TabItem>
-						<TabItem Header="Description">
-							<ScrollViewer VerticalScrollBarVisibility="Auto">
-								<TextBlock TextWrapping="WrapWithOverflow" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et" />
+						<TabItem Header="Description" >
+							<ScrollViewer VerticalScrollBarVisibility="Auto" >
+								<TextBlock  Text="{Binding TourDescription}" />
 							</ScrollViewer>
 						</TabItem>
 					</TabControl>
