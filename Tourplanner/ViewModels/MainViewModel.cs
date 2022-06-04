@@ -117,10 +117,85 @@ namespace Tourplanner.Client.ViewModels {
 				OnPropertyChanged(nameof(TourTime));
 			}
 }
-		/*public double TourDistance {
+		public string TourDistance {
 			get => selectedTour == null ? "" : $"{selectedTour.TourDistance} km";
-		}*/
+		set {
+				if(selectedTour == null)
+					return;
+				OnPropertyChanged(nameof(TourDistance));
+			}
+		}
 
+		public string LogComment {
+			get => selectedTour == null ? "" : selectedTour.GetLogComment();
+			set {
+				if(selectedTour == null)
+					return;
+				
+				OnPropertyChanged(nameof(LogComment));
+			}
+		}
+
+		public string LogTime {
+			get => selectedTour == null ? "" : $"{selectedTour.GetLogTime():hh\\:mm}";
+			set {
+				if(selectedTour == null)
+					return;
+
+				OnPropertyChanged(nameof(LogTime));
+			}
+		}
+
+		public string LogDifficulty {
+			get => selectedTour == null ? "" : $"{selectedTour.GetLogDifficulty()}";
+			set {
+				if(selectedTour == null)
+					return;
+
+				OnPropertyChanged(nameof(LogDifficulty));
+			}
+		}
+
+		public string LogRating {
+			get => selectedTour == null ? "" : $"{selectedTour.GetLogRating()}";
+			set {
+				if(selectedTour == null)
+					return;
+
+				OnPropertyChanged(nameof(LogRating));
+			}
+		}
+
+		
+		public string TourImage {
+			get => selectedTour == null ? "" : $"https://localhost:44314/Static/{selectedTour.TourID}.jpeg"; // URL vom Bild nehmen 
+			set {
+				if(selectedTour == null)
+					return;
+
+				OnPropertyChanged(nameof(TourImage));
+			}
+		}
+
+		public string Tourpopularity {
+			get => selectedTour == null ? "" : $"{selectedTour.GetTourPopularity()}";
+			set {
+				if(selectedTour == null)
+					return;
+
+				OnPropertyChanged(nameof(Tourpopularity));
+			}
+		}
+
+		public string TourFriendlyness {
+			get => selectedTour == null ? "" : $"{selectedTour.GetTourFriendlyness()}";
+			set {
+				if(selectedTour == null)
+					return;
+
+				OnPropertyChanged(nameof(TourFriendlyness));
+			}
+		}
 
 
 
@@ -147,7 +222,7 @@ namespace Tourplanner.Client.ViewModels {
 			DeleteTourLog = new RelayCommand((sender) => {
 				LogController logcontroller = new LogController();
 
-				Task.Run<bool>(async () => await logcontroller.DeleteLog(31));
+				Task.Run<bool>(async () => await logcontroller.DeleteLog(SelectedIndex));
 				MessageBox.Show("Log was sucsessfully deleted", "Delete your Log");
 			});
 			
@@ -156,6 +231,7 @@ namespace Tourplanner.Client.ViewModels {
 				Task.Run<bool>(async () => await tourcontroller.DeleteTour(SelectedIndex));
 				MessageBox.Show("Tour was sucsessfully deleted", "Delete your Log");
 			});
+
 
 			CreateRaportSelected = new RelayCommand((sender) => {
 				FileExplorer fileExplorer = BlFactory.GetFileExplorer();
@@ -214,11 +290,18 @@ namespace Tourplanner.Client.ViewModels {
 
 			UpdateSelectedTourIndex(sender, index);
 			NotifyDetailsChanged();
+			//RefreshTours(Tours);
 			//RefreshLogs();
 		}
 
 		public void UpdateSelectedTourIndex(object? sender, int index) {
 			selectedTourIndex = index;
+		}
+
+		public void RefreshTours( ObservableCollection<CombinedTour> Tours) {
+			List<CombinedTour> tours = new List<CombinedTour>();
+			tours = Task.Run<List<CombinedTour>>(async () => await ToursBL.GetCombinedTours()).Result;
+			Tours = new ObservableCollection<CombinedTour>(tours);
 		}
 
 		private void NotifyDetailsChanged() {
@@ -227,21 +310,15 @@ namespace Tourplanner.Client.ViewModels {
 			OnPropertyChanged(nameof(TourFrom));
 			OnPropertyChanged(nameof(TourTo));
 			OnPropertyChanged(nameof(TourTransportationType));
-			OnPropertyChanged(nameof(TourTime));
-			/*
-			OnPropertyChanged(nameof(TourDestination));
-			OnPropertyChanged(nameof(TourType));
-			
 			OnPropertyChanged(nameof(TourDistance));
-			OnPropertyChanged(nameof(TourDuration));
-			OnPropertyChanged(nameof(TourPopularity));
-			OnPropertyChanged(nameof(TourChildFriendliness));
-			OnPropertyChanged(nameof(DetailsVisibility));
-
-			FileInfo mapFile = null;
-			if(selectedTour != null)
-				mapFile = businessLayer.Maps.GetRouteImage(selectedTour.content);
-			ImagePath = mapFile == null ? null : new Uri(mapFile.FullName);*/
+			OnPropertyChanged(nameof(TourTime));
+			OnPropertyChanged(nameof(LogComment));
+			OnPropertyChanged(nameof(LogTime));
+			OnPropertyChanged(nameof(LogDifficulty));
+			OnPropertyChanged(nameof(LogRating));
+			OnPropertyChanged(nameof(TourImage));
+			OnPropertyChanged(nameof(Tourpopularity));
+			OnPropertyChanged(nameof(TourFriendlyness));
 		}
 	}
 }

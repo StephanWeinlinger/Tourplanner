@@ -5,8 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tourplanner.Client.Views" xmlns:viewmodels="clr-namespace:Tourplanner.Client.ViewModels" 
 		d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+		xmlns:datamodels="clr-namespace:Tourplanner.Shared.Model;assembly=TourPlanner.Shared.Model"
 		mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" MinHeight="300" MinWidth="300" FontSize="14">
+
+<!--	<Window.Resources>
+		<ObjectDataProvider x:Key="Transportation" MethodName="GetValues" ObjectType="{x:Type datamodels:Transportation}">
+			<ObjectDataProvider.MethodParameters>
+				<x:Type Type="datamodels:Transportation"/>
+			</ObjectDataProvider.MethodParameters>
+	</Window.Resources> -->
+	
 	<DockPanel>
 		<Menu DockPanel.Dock="Top" FontSize="14">
 				<MenuItem Header="_File">
@@ -90,10 +99,10 @@
 									<Label Grid.Column="0" Grid.Row="4" Content="Estimated Time:" />
 									<Label Grid.Column="1" Grid.Row="4" Content="{Binding TourTime}" />
 									<Label Grid.Column="0" Grid.Row="5" Content="Popularity:" />
-									<Label Grid.Column="1" Grid.Row="5" Content="{Binding CurrentPopularity}" />
+									<Label Grid.Column="1" Grid.Row="5" Content="{Binding Tourpopularity}" />
 									<Label Grid.Column="0" Grid.Row="6" Content="Child Friendliness:" />
-									<Label Grid.Column="1" Grid.Row="6" Content="{Binding CurrentChildFriendliness}" />
-									<Image Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" Source="/assets/map_placeholder.png" Width="500" />
+									<Label Grid.Column="1" Grid.Row="6" Content="{Binding TourFriendlyness}" />
+									<Image Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" Source="{Binding TourImage}" Width="500" />
 								</Grid>
 							</ScrollViewer>
 						</TabItem>
@@ -107,13 +116,13 @@
 				<GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" />
 				<DockPanel Grid.Row="2">
 					<Label Content="Logs" DockPanel.Dock="Top" HorizontalAlignment="Center" />
-					<DataGrid AutoGenerateColumns="False">
+					<DataGrid AutoGenerateColumns="False" >
 						<DataGrid.Columns>
 							<DataGridTextColumn Header="Date"/>
-							<DataGridTextColumn Header="Total Time"/>
-							<DataGridTextColumn Header="Difficulty"/>
-							<DataGridTextColumn Header="Rating"/>
-							<DataGridTextColumn Header="Comment" Width="*"/>
+							<DataGridTextColumn Header="Total Time" Binding="{Binding LogTime}"/>
+							<DataGridTextColumn Header="Difficulty" Binding="{Binding LogDifficulty}"/>
+							<DataGridTextColumn Header="Rating" Binding="{Binding LogRating}"/>
+							<DataGridTextColumn Header="Comment" Width="*" Binding="{Binding LogComment}"/>
 						</DataGrid.Columns>
 					</DataGrid>
 				</DockPanel>

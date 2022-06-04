@@ -19,6 +19,12 @@ namespace Tourplanner.Shared.Model {
 			this.displaytour = displaytour;
 			
 		}
+		public int TourID {
+			get => Id; set {
+				Id = value;
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TourID)));
+			}
+		}
 
 		public string Title {
 			get => Name; set {
@@ -65,6 +71,10 @@ namespace Tourplanner.Shared.Model {
 
 		
 
+
+
+
+
 		public CombinedTour() {}
 		public CombinedTour(string name, string description, string from, string to, string transportType, List<Log> logs) {
 			Name = name;
@@ -107,5 +117,79 @@ namespace Tourplanner.Shared.Model {
 		public string Time { get; set; }
 		[Required]
 		public List<Log> Logs { get; set; }
+
+
+		public string GetLogComment() {
+			string LogComment = "";
+			foreach(Log items in Logs) {
+				if(items.TourId == Id) {
+					LogComment = items.Comment;
+				}
+				
+			}
+			return LogComment;
+		}
+		public int GetLogDifficulty() {
+			int LogDifficulty  = -1;
+			foreach(Log items in Logs) {
+				if(items.TourId == Id) {
+					LogDifficulty = items.Difficulty;
+				}
+
+			}
+			return LogDifficulty;
+		}
+		public string GetLogTime() {
+			string LogTime = "";
+			foreach(Log items in Logs) {
+				if(items.TourId == Id) {
+					LogTime = items.Time;
+				}
+
+			}
+			return LogTime;
+		}
+		public int GetLogRating() {
+			int LogRating = -1 ;
+			foreach(Log items in Logs) {
+				if(items.TourId == Id) {
+					LogRating = items.Rating;
+				}
+
+			}
+			return LogRating;
+		}
+		public string GetLogDate() {
+			string LogComment = "";
+			foreach(Log items in Logs) {
+				if(items.TourId == Id) {
+					LogComment = items.Comment;
+				}
+
+			}
+			return LogComment;
+		}
+
+		public int GetTourPopularity() {
+			int Tourpopularity = 0;
+			foreach(Log items in Logs) {
+
+				// TODO Berechnung der popularity
+				Tourpopularity++;
+			}
+			return Tourpopularity;
+		}
+
+		public int GetTourFriendlyness() {
+			int TourFriendlyness = 0;
+			foreach(Log items in Logs) {
+
+				// TODO Berechnung der Friendlyness
+				TourFriendlyness++;
+			}
+			return TourFriendlyness;
+		}
 	}
+
+	
 }

@@ -53,19 +53,18 @@ namespace Tourplanner.Client.ViewModels {
 				OnPropertyChanged();
 			}
 		}
-		public void UpdateTour() {
+		public void UpdateTour(int selectedTourID) {
 			TourController tourcontroller = new TourController();
 			Tour NewTour = new Tour(TourTitle, TourDescription, FromInput, ToInput, TransportationType);
-			Task.Run<CombinedTour>(async () => await tourcontroller.UpdateTour(53,NewTour));
+			Task.Run<CombinedTour>(async () => await tourcontroller.UpdateTour(selectedTourID, NewTour));
 			MessageBox.Show("Tour was sucsessfully updated", "Update your Tour");
 
 		}
 
+		// Selected ID übergeben
 		public UpdateTourViewModel() {
 			UpdateTourDB = new RelayCommand((sender) => {
-				MessageBox.Show("Siu", "Update your Tour");
-
-				UpdateTour();
+				UpdateTour(50);
 			});
 		}
 
