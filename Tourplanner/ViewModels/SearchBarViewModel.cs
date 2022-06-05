@@ -3,26 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Tourplanner.Client.Commands;
 
 namespace Tourplanner.Client.ViewModels {
-	class SearchBarViewModel : BaseViewModel {
+	public class SearchBarViewModel : ViewModelBase {
+		public ICommand SearchCommand { get; }
+		public ICommand ClearCommand { get; }
 
-		private string _searchText;
+		public event EventHandler<string> OnSearchClicked;
+		public event EventHandler<string> OnClearClicked;
 
-		// CustomCommands Searchcomand
-
-		public string SearchText {
-			get => _searchText;
+		private string _filter;
+		public string Filter {
+			get {
+				return _filter;
+			}
 			set {
-				_searchText = value;
-				OnPropertyChanged();
+				_filter = value;
+				OnPropertyChanged(nameof(Filter));
 			}
 		}
 
 		public SearchBarViewModel() {
-			// eingabe validieren
-			// searchcommand ausführen
+			SearchCommand = new EventCommand((_) => {
+				OnSearchClicked?.Invoke(this, Filter);
+			});
+			ClearCommand = new EventCommand((_) => {
+				OnClearClicked?.Invoke(this, "");
+			});
 		}
-
 	}
 }

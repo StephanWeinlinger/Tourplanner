@@ -12,16 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Tourplanner.Client.ViewModels;
 
 namespace Tourplanner.Client.Views {
 	/// <summary>
-	/// Interaktionslogik für AddLog.xaml
+	/// Interaktionslogik für SearchBarView.xaml
 	/// </summary>
-	public partial class AddLog : Window {
-		public AddLog() {
+	public partial class SearchBarView : UserControl {
+		public SearchBarView() {
 			InitializeComponent();
-			DataContext = new AddLogViewModel();
 		}
 	}
 }

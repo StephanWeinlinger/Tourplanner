@@ -1,0 +1,38 @@
+﻿<Window x:Class="Tourplanner.Client.Views.ModifyLogView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Tourplanner.Client.Views"
+      mc:Ignorable="d"
+      Title="Add Log" Height="350" Width="350">
+
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="Auto"/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+		<Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Margin="5">Date:</Label>
+		<DatePicker Grid.Row="0" Grid.Column="1" Margin="5" SelectedDate="{Binding Date}"/>
+		<Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Margin="5">Comment:</Label>
+		<TextBox Grid.Row="1" Grid.Column="1" Margin="5" Text="{Binding Comment}"/>
+		<Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Margin="5">Difficulty:</Label>
+		<TextBox Grid.Row="2" Grid.Column="1" Margin="5" Text="{Binding Difficulty}"/>
+		<Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Margin="5">Time:</Label>
+		<TextBox Grid.Row="3" Grid.Column="1" Margin="5" Text="{Binding Time}"/>
+		<Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" Margin="5">Rating</Label>
+		<TextBox Grid.Row="4" Grid.Column="1" Margin="5" Text="{Binding Rating}"/>
+
+		<Button Grid.Row="6" Grid.Column="1" Margin="5,5,5,235" Content="{Binding ButtonText}" Command="{Binding CurrentCommand}"/>
+	</Grid>
+</Window>

@@ -8,18 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="assets\map_placeholder.png" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Tourplanner.Client.BL\Tourplanner.Client.BL.csproj" />
     <ProjectReference Include="..\Tourplanner.Shared.Model\Tourplanner.Shared.Model.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="assets\map_placeholder.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
   </ItemGroup>
 
 </Project>

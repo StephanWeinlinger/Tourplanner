@@ -3,47 +3,33 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Tourplanner.Client.Views" xmlns:viewmodels="clr-namespace:Tourplanner.Client.ViewModels" 
-		d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
-		xmlns:datamodels="clr-namespace:Tourplanner.Shared.Model;assembly=TourPlanner.Shared.Model"
-		mc:Ignorable="d"
+        xmlns:local="clr-namespace:Tourplanner.Client"
+        xmlns:views="clr-namespace:Tourplanner.Client.Views"
+        mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" MinHeight="300" MinWidth="300" FontSize="14">
-
-<!--	<Window.Resources>
-		<ObjectDataProvider x:Key="Transportation" MethodName="GetValues" ObjectType="{x:Type datamodels:Transportation}">
-			<ObjectDataProvider.MethodParameters>
-				<x:Type Type="datamodels:Transportation"/>
-			</ObjectDataProvider.MethodParameters>
-	</Window.Resources> -->
-	
 	<DockPanel>
 		<Menu DockPanel.Dock="Top" FontSize="14">
 				<MenuItem Header="_File">
-					<MenuItem Header="_Import" />
-					<MenuItem Header="_Export" />
-					<MenuItem Header="_Exit" />
+					<MenuItem Header="_Import" Command="{Binding ImportCommand}"/>
+					<MenuItem Header="_Export" Command="{Binding ExportCommand}"/>
 				</MenuItem>
 				<MenuItem Header="_Edit">
-				<MenuItem Header="_Add Tour"  Click="OpenAddTour"  x:Name="AddTourUI" />
-				<MenuItem Header="_Modify Selected Tour" Click="UpdateAddTour"  x:Name="UpdateTourUI"  />
-				<MenuItem Header="_Delete Selected Tour" Command="{Binding DeleteTour}" />
-					<MenuItem Header="_Add Log"  Click="AddLog" />
-					<MenuItem Header="_Modify Selected Log"  Click="UpdateLog" />
-					<MenuItem Header="_Delete Selected Log" Command="{Binding DeleteTourLog}" />
+					<MenuItem Header="_Add Tour" Command="{Binding ShowAddTourCommand}"/>
+					<MenuItem Header="_Modify Selected Tour" Command="{Binding ShowUpdateTourCommand}"/>
+					<MenuItem Header="_Delete Selected Tour" Command="{Binding DeleteTourCommand}"/>
+					<MenuItem Header="_Add Log" Command="{Binding ShowAddLogCommand}"/>
+					<MenuItem Header="_Modify Selected Log" Command="{Binding ShowUpdateLogCommand}"/>
+					<MenuItem Header="_Delete Selected Log" Command="{Binding DeleteLogCommand}"/>
 				</MenuItem>
 				<MenuItem Header="_Report">
-				<MenuItem Header="_Create Report Of Selected Tour" Command="{Binding CreateRaportSelected}"/>
-				<MenuItem Header="_Create Summarized Report"  Command="{Binding CreateRaportSummarized}"/>
+					<MenuItem Header="_Create Report Of Selected Tour" Command="{Binding CreateTourReportCommand}"/>
+					<MenuItem Header="_Create Summarized Report" Command="{Binding CreateSummarizedReportCommand}"/>
 				</MenuItem>
-				<MenuItem Header="_Options">
-				<MenuItem Header="_Import" Command="{Binding Import}" />
-				<MenuItem Header="_Export"  Command="{Binding Export}" />
-				</MenuItem>
-			<MenuItem Header="_About" Command="{Binding AboutClicked}"/>
+			<MenuItem Header="_About" Command="{Binding AboutCommand}"/>
 		</Menu>
 		
 		<Grid DockPanel.Dock="Top">
-			<local:SearchBar x:Name="SearchBar" />
+			<views:SearchBarView x:Name="SearchBarView" />
 		</Grid>
 		<Grid>
 			<Grid.ColumnDefinitions>
@@ -53,10 +39,10 @@
 			</Grid.ColumnDefinitions>
 			<DockPanel Grid.Column="0">
 				<Label Content="Tours" DockPanel.Dock="Top" HorizontalAlignment="Center" />
-				<ListBox ItemsSource="{Binding Tours}" SelectedIndex="{Binding SelectedIndex}">
+				<ListBox ItemsSource="{Binding Tours}" SelectedItem="{Binding CurrentTour}">
 					<ListBox.ItemTemplate>
 						<DataTemplate>
-							<TextBlock Text="{Binding Title}"/>
+							<TextBlock Text="{Binding Name}"/>
 						</DataTemplate>
 					</ListBox.ItemTemplate>
 				</ListBox>
@@ -69,7 +55,7 @@
 					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
 				<DockPanel Grid.Row="0" >
-					<Label Content="{Binding Title}" DockPanel.Dock="Top" HorizontalAlignment="Center"/>
+					<Label Content="Test Title" DockPanel.Dock="Top" HorizontalAlignment="Center"/>
 					<TabControl>
 						<TabItem Header="Route">
 							<ScrollViewer HorizontalScrollBarVisibility="Auto">
@@ -89,26 +75,26 @@
 										<RowDefinition Height="Auto" />
 									</Grid.RowDefinitions>
 									<Label Grid.Column="0" Grid.Row="0" Content="From:" />
-									<Label Grid.Column="1" Grid.Row="0" Content="{Binding TourFrom}" />
+									<Label Grid.Column="1" Grid.Row="0" Content="{Binding CurrentTour.From}"/>
 									<Label Grid.Column="0" Grid.Row="1" Content="To:" />
-									<Label Grid.Column="1" Grid.Row="1" Content="{Binding TourTo}" />
+									<Label Grid.Column="1" Grid.Row="1" Content="{Binding CurrentTour.To}"/>
 									<Label Grid.Column="0" Grid.Row="2" Content="Transport Type:" />
-									<Label Grid.Column="1" Grid.Row="2" Content="{Binding TourTransportationType}" />
+									<Label Grid.Column="1" Grid.Row="2" Content="{Binding CurrentTour.TransportType}"/>
 									<Label Grid.Column="0" Grid.Row="3" Content="Tour Distance:" />
-									<Label Grid.Column="1" Grid.Row="3" Content="{Binding TourDistance}" />
+									<Label Grid.Column="1" Grid.Row="3" Content="{Binding CurrentTour.Distance}"/>
 									<Label Grid.Column="0" Grid.Row="4" Content="Estimated Time:" />
-									<Label Grid.Column="1" Grid.Row="4" Content="{Binding TourTime}" />
+									<Label Grid.Column="1" Grid.Row="4" Content="{Binding CurrentTour.Time}"/>
 									<Label Grid.Column="0" Grid.Row="5" Content="Popularity:" />
-									<Label Grid.Column="1" Grid.Row="5" Content="{Binding Tourpopularity}" />
+									<Label Grid.Column="1" Grid.Row="5" Content="{Binding CurrentTour.Popularity}"/>
 									<Label Grid.Column="0" Grid.Row="6" Content="Child Friendliness:" />
-									<Label Grid.Column="1" Grid.Row="6" Content="{Binding TourFriendlyness}" />
-									<Image Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" Source="{Binding TourImage}" Width="500" />
+									<Label Grid.Column="1" Grid.Row="6" Content="{Binding CurrentTour.ChildFriendliness}"/>
+									<Image Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" Width="500" Source="{Binding CurrentTour.ImageLink}"/>
 								</Grid>
 							</ScrollViewer>
 						</TabItem>
 						<TabItem Header="Description" >
 							<ScrollViewer VerticalScrollBarVisibility="Auto" >
-								<TextBlock  Text="{Binding TourDescription}" />
+								<TextBlock Text="{Binding CurrentTour.Description}" />
 							</ScrollViewer>
 						</TabItem>
 					</TabControl>
@@ -116,13 +102,13 @@
 				<GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" />
 				<DockPanel Grid.Row="2">
 					<Label Content="Logs" DockPanel.Dock="Top" HorizontalAlignment="Center" />
-					<DataGrid AutoGenerateColumns="False" >
+					<DataGrid AutoGenerateColumns="False" ItemsSource="{Binding CurrentTour.Logs}" SelectedItem="{Binding CurrentLog}">
 						<DataGrid.Columns>
-							<DataGridTextColumn Header="Date"/>
-							<DataGridTextColumn Header="Total Time" Binding="{Binding LogTime}"/>
-							<DataGridTextColumn Header="Difficulty" Binding="{Binding LogDifficulty}"/>
-							<DataGridTextColumn Header="Rating" Binding="{Binding LogRating}"/>
-							<DataGridTextColumn Header="Comment" Width="*" Binding="{Binding LogComment}"/>
+							<DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
+							<DataGridTextColumn Header="Total Time" Binding="{Binding Time}"/>
+							<DataGridTextColumn Header="Difficulty" Binding="{Binding Difficulty}"/>
+							<DataGridTextColumn Header="Rating" Binding="{Binding Rating}"/>
+							<DataGridTextColumn Header="Comment" Width="*" Binding="{Binding Comment}"/>
 						</DataGrid.Columns>
 					</DataGrid>
 				</DockPanel>

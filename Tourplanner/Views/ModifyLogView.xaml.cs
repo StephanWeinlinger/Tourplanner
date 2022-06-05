@@ -10,18 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Tourplanner.Client.ViewModels;
 
 namespace Tourplanner.Client.Views {
 	/// <summary>
-	/// Interaktionslogik für UpdateTour.xaml
+	/// Interaktionslogik für ModifyLogView.xaml
 	/// </summary>
-	public partial class UpdateTour : Window {
-		public UpdateTour() {
+	public partial class ModifyLogView : Window {
+		public ModifyLogView() {
 			InitializeComponent();
-			DataContext = new UpdateTourViewModel();
 		}
 	}
-	}
-
+}

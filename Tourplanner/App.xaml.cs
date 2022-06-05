@@ -7,32 +7,24 @@ using System.Threading.Tasks;
 using System.Windows;
 using Tourplanner.Client;
 using Tourplanner.Client.ViewModels;
+using Tourplanner.Client.Views;
 
-namespace Tourplanner {
+namespace Tourplanner.Client {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application {
+	    protected override void OnStartup(StartupEventArgs e) {
+		    SearchBarViewModel searchBarViewModel = new SearchBarViewModel();
+		    MainViewModel mainViewModel = new MainViewModel(searchBarViewModel);
 
-		private void App_OnStartup(object sender, StartupEventArgs e) {
-			
-			var searchBarViewModel = new SearchBarViewModel();
-			var addLogViewModel = new AddLogViewModel();
-			var updateLogViewModel = new UpdateLogViewModel();
-			var addTourViewmodel = new AddTourViewmodel();
-			var updateTourViewModel = new UpdateTourViewModel();
+			MainWindow = new MainWindow() {
+			    DataContext = mainViewModel,
+				SearchBarView = {DataContext = searchBarViewModel}
+		    };
 
-			//MVVM:
-			var wnd = new MainWindow {
-				DataContext = new MainViewModel(searchBarViewModel, addLogViewModel, addTourViewmodel, updateLogViewModel, updateTourViewModel),
-				AddTourUI = { DataContext = addTourViewmodel },
-				//UpdateTourUI = { DataContext = updateTourViewModel }
-			};
-
-			wnd.Show();
-				
-			
-		}
-
-	}
+		    MainWindow.Show();
+		    base.OnStartup(e);
+	    }
+    }
 }
