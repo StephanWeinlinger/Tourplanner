@@ -27,12 +27,29 @@
 		<Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Margin="5">Comment:</Label>
 		<TextBox Grid.Row="1" Grid.Column="1" Margin="5" Text="{Binding Comment}"/>
 		<Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Margin="5">Difficulty:</Label>
-		<TextBox Grid.Row="2" Grid.Column="1" Margin="5" Text="{Binding Difficulty}"/>
+		<Grid Grid.Row="2" Grid.Column="1" Margin="5">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<Label Grid.Column="0">Easy</Label>
+			<Slider Grid.Column="1" Value="{Binding Difficulty}" Minimum="1" Maximum="5" />
+			<Label Grid.Column="2">Hard</Label>
+		</Grid>
 		<Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Margin="5">Time:</Label>
 		<TextBox Grid.Row="3" Grid.Column="1" Margin="5" Text="{Binding Time}"/>
 		<Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" Margin="5">Rating</Label>
-		<TextBox Grid.Row="4" Grid.Column="1" Margin="5" Text="{Binding Rating}"/>
-
+		<Grid Grid.Row="4" Grid.Column="1" Margin="5">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<Label Grid.Column="0">Bad</Label>
+			<Slider Grid.Column="1" Value="{Binding Rating}" Minimum="1" Maximum="5" />
+			<Label Grid.Column="2">Good</Label>
+		</Grid>
 		<Button Grid.Row="6" Grid.Column="1" Margin="5,5,5,235" Content="{Binding ButtonText}" Command="{Binding CurrentCommand}"/>
 	</Grid>
 </Window>
