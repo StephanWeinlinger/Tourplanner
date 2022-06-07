@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Tourplanner.Client.BL.Controllers;
 
 namespace Tourplanner.Client.BL {
@@ -13,7 +15,9 @@ namespace Tourplanner.Client.BL {
 
 		public static ApiHandler GetApiHandler() {
 			if(_apiHandler == null) {
-				_apiHandler = new ApiHandler();
+				Dictionary<string, string> config =
+					JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText("../../../../configClient.json"));
+				_apiHandler = new ApiHandler(config["APIUrl"]);
 			}
 
 			return _apiHandler;
@@ -28,7 +32,9 @@ namespace Tourplanner.Client.BL {
 		}
 
 		public static PdfHandler CreatePdfHandler(string path) {
-            return new PdfHandler(path);
+			Dictionary<string, string> config =
+				JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText("../../../../configClient.json"));
+			return new PdfHandler(path, config["ImageUrl"]);
         }
 	}
 }

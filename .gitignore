@@ -9,6 +9,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+Tourplanner.Client.BL/App.config
 Tourplanner.Server/App.config
 Tourplanner.Server/Static/
 
@@ -363,3 +364,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+configClient.json
+configServer.json

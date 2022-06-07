@@ -8,6 +8,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F4FA7EED-B40E-4AFE-B592-50C728779850}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		configClient.json = configClient.json
+		configServer.json = configServer.json
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tourplanner.Server", "Tourplanner.Server\Tourplanner.Server.csproj", "{D624B59E-6681-4B05-8F8E-DAA87E7C9340}"
@@ -16,7 +18,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tourplanner.Shared.Model", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tourplanner.Server.DAL", "Tourplanner.Server.DAL\Tourplanner.Server.DAL.csproj", "{6DDE2022-8BE5-4EEB-BC19-F4B9B52527E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tourplanner.Client.BL", "Tourplanner.Client.BL\Tourplanner.Client.BL.csproj", "{9BA1A508-D0B0-445B-8C10-BF2D0DB261B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tourplanner.Client.BL", "Tourplanner.Client.BL\Tourplanner.Client.BL.csproj", "{9BA1A508-D0B0-445B-8C10-BF2D0DB261B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

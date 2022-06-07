@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Tourplanner.Shared.Model;
 
 namespace Tourplanner.Client.ViewModels {
@@ -41,7 +43,10 @@ namespace Tourplanner.Client.ViewModels {
 				ChildFriendliness = (totalDifficulty / combinedTour.Logs.Count).ToString();
 			}
 			LogsCollection.CollectionChanged += LogsCollection_CollectionChanged;
-			ImageLink = $"https://localhost:44314/Static/{combinedTour.Id}.jpeg";
+			// get image url
+			Dictionary<string, string> config =
+				JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText("../../../../configClient.json"));
+			ImageLink = $"{config["ImageURL"]}{combinedTour.Id}.jpeg";
 		}
 
 		// reevalute value if collection changes

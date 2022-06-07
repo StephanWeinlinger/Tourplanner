@@ -11,10 +11,10 @@ namespace Tourplanner.Client.BL {
 	public class ApiHandler {
 		private HttpClient _client;
 
-		public ApiHandler() {
+		public ApiHandler(string url) {
 			_client = new HttpClient();
 			// TODO replace with config file
-			_client.BaseAddress = new Uri("https://localhost:44314/api/");
+			_client.BaseAddress = new Uri(url);
 			_client.DefaultRequestHeaders.Accept.Clear();
 			_client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 		}

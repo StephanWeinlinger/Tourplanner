@@ -20,7 +20,7 @@ namespace Tourplanner.Client.BL.Controllers {
 		private Document _document;
 		private string _baseUrl;
 
-		public PdfHandler(string path) {
+		public PdfHandler(string path, string url) {
 			PdfWriter writer = new PdfWriter(path);
 			PdfDocument pdf = new PdfDocument(writer);
 			_document = new Document(pdf);

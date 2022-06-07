@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
+using Newtonsoft.Json;
 using Tourplanner.Server.DAL.DAO;
 
 namespace Tourplanner.Server.DAL {
@@ -11,8 +14,9 @@ namespace Tourplanner.Server.DAL {
 		// create database if it doesn't exist yet and return it
 	    public static Database GetDatabase() {
 		    if(_database == null) {
-			    string connectionString = ConfigurationManager.ConnectionStrings["PostgresqlConnectionString"].ConnectionString;
-			    _database = new Database(connectionString);
+				Dictionary<string, string> config =
+				    JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText("../configServer.json"));
+			    _database = new Database(config["PostgresqlConnectionString"]);
 		    }
 
 		    return _database;
@@ -21,9 +25,10 @@ namespace Tourplanner.Server.DAL {
 	    // create mapquest if it doesn't exist yet and return it
 	    public static MapQuest GetMapQuest() {
 		    if(_mapQuest == null) {
-			    string key = ConfigurationManager.ConnectionStrings["MapQuestAPIKey"].ConnectionString;
-			    _mapQuest = new MapQuest(key);
-		    }
+				Dictionary<string, string> config =
+					JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText("../configServer.json"));
+				_mapQuest = new MapQuest(config["MapQuestAPIKey"]);
+			}
 
 		    return _mapQuest;
 	    }
