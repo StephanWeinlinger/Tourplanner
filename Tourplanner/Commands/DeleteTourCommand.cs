@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Tourplanner.Client.BL.Controllers;
 using Tourplanner.Client.ViewModels;
 using Tourplanner.Client.Views;
@@ -17,6 +18,10 @@ namespace Tourplanner.Client.Commands {
 		}
 
 		public override void Execute(object parameter) {
+			if(_mainViewModel.CurrentTour == null) {
+				MessageBox.Show("No tour was selected!", "Tourplanner", MessageBoxButton.OK, MessageBoxImage.Error);
+				return;
+			}
 			TourController tourController = new TourController();
 			// remove tour in database
 			Task.Run<bool>(async () => await tourController.DeleteTour(Int32.Parse(_mainViewModel.CurrentTour.Id)));

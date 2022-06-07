@@ -21,6 +21,9 @@ namespace Tourplanner.Client.Commands {
 			// select folder
 			FileExplorer fileExplorer = BlFactory.GetFileExplorer();
 			string path = fileExplorer.SelectFolder();
+			if(path == null) {
+				return;
+			}
 			// get tours from database and generate report
 			ReportController reportController = new ReportController();
 			bool success = Task.Run<bool>(async () => await reportController.GenerateSummarizedReport(path)).Result;

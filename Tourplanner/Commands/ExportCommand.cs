@@ -15,6 +15,9 @@ namespace Tourplanner.Client.Commands {
 			// select folder
 			FileExplorer fileExplorer = BlFactory.GetFileExplorer();
 			string path = fileExplorer.SelectFolder();
+			if(path == null) {
+				return;
+			}
 			// get current tours from database
 			ImportController importController = new ImportController();
 			bool success = Task.Run<bool>(async () => await importController.ExportTours(path)).Result;

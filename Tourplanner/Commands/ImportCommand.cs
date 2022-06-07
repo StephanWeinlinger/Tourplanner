@@ -21,6 +21,9 @@ namespace Tourplanner.Client.Commands {
 			// select file
 			FileExplorer fileExplorer = BlFactory.GetFileExplorer();
 			string path = fileExplorer.SelectFile();
+			if(path == null) {
+				return;
+			}
 			// add tours to database
 			ImportController importController = new ImportController();
 			List<CombinedTour> combinedTours = Task.Run<List<CombinedTour>>(async () => await importController.ImportTours(path)).Result;

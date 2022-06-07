@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Tourplanner.Client.BL.Controllers;
 using Tourplanner.Client.ViewModels;
 using Tourplanner.Client.Views;
@@ -17,6 +18,10 @@ namespace Tourplanner.Client.Commands {
 		}
 
 		public override void Execute(object parameter) {
+			if(_mainViewModel.CurrentLog == null) {
+				MessageBox.Show("No log was selected!", "Tourplanner", MessageBoxButton.OK, MessageBoxImage.Error);
+				return;
+			}
 			LogController logController = new LogController();
 			// remove log in database
 			Task.Run<bool>(async () => await logController.DeleteLog(Int32.Parse(_mainViewModel.CurrentLog.Id)));
