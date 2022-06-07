@@ -36,7 +36,6 @@ namespace Tourplanner.Server.DAL {
 	    // create filesystem if it doesn't exist yet and return it
 	    public static Filesystem GetFilesystem() {
 		    if(_filesystem == null) {
-			    string key = ConfigurationManager.ConnectionStrings["MapQuestAPIKey"].ConnectionString;
 			    _filesystem = new Filesystem();
 		    }
 

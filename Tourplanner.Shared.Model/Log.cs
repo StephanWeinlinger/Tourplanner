@@ -42,12 +42,10 @@ namespace Tourplanner.Shared.Model {
 		[Required]
 		public string Comment { get; set; }
 		[Required]
-		[Range(1,5)]
 		public int Difficulty { get; set; }
 		[Required]
 		public string Time { get; set; }
 		[Required]
-		[Range(1, 5)]
 		public int Rating { get; set; }
 	}
 }

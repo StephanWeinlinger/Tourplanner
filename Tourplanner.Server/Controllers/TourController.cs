@@ -113,7 +113,7 @@ namespace Tourplanner.Server.Controllers {
 				TourDao tourDao = DalFactory.CreateTourDao();
 				Tour tour = tourDao.UpdateTour(id, newTour);
 				if(tour == null) {
-					return null;
+					return BadRequest(new CustomResponse(false, new Dictionary<string, string> { { "Custom", "Id is invalid" } }));
 				}
 				// get image link from mapquest
 				string url = mapQuest.GetMap(response.SessionId);

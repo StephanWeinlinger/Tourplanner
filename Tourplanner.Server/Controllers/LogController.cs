@@ -19,6 +19,9 @@ namespace Tourplanner.Server.Controllers {
 		    if(!ModelState.IsValid) {
 			    return BadRequest(ModelState);
 		    }
+		    if(newLog.Difficulty < 1 || newLog.Difficulty > 5 || newLog.Rating < 1 || newLog.Rating > 5) {
+			    return BadRequest(new CustomResponse(false, new Dictionary<string, string> { { "Custom", "Difficulty and rating have to be between 1-5" } }));
+			}
 		    LogDao logDao = DalFactory.CreateLogDao();
 		    try {
 			    Log log = logDao.InsertLog(newLog);
@@ -33,9 +36,15 @@ namespace Tourplanner.Server.Controllers {
 		    if(!ModelState.IsValid) {
 			    return BadRequest(ModelState);
 		    }
+			if(updatedLog.Difficulty < 1 || updatedLog.Difficulty > 5 || updatedLog.Rating < 1 || updatedLog.Rating > 5) {
+				return BadRequest(new CustomResponse(false, new Dictionary<string, string> { { "Custom", "Difficulty and rating have to be between 1-5" } }));
+		    }
 			LogDao logDao = DalFactory.CreateLogDao();
 			try {
 				Log log = logDao.UpdateLog(id, updatedLog);
+				if(log == null) {
+					return BadRequest(new CustomResponse(false, new Dictionary<string, string> { { "Custom", "Id or TourId is invalid" } }));
+				}
 				return log;
 			} catch(Exception e) {
 				return BadRequest(new CustomResponse(false, new Dictionary<string, string> { { "Custom", "Error in database" } }));

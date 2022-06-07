@@ -20,6 +20,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tourplanner.Server.DAL", "T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tourplanner.Client.BL", "Tourplanner.Client.BL\Tourplanner.Client.BL.csproj", "{9BA1A508-D0B0-445B-8C10-BF2D0DB261B7}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tourplanner.Client.BL.Test", "Tourplanner.Client.BL.Test\Tourplanner.Client.BL.Test.csproj", "{F1521417-CC57-4039-AF07-1A2BDF46251F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tourplanner.Server.DAL.Test", "Tourplanner.Server.DAL.Test\Tourplanner.Server.DAL.Test.csproj", "{D7B84274-7362-4413-9B86-FAF9FAC4EF1D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +50,14 @@ Global
 		{9BA1A508-D0B0-445B-8C10-BF2D0DB261B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BA1A508-D0B0-445B-8C10-BF2D0DB261B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BA1A508-D0B0-445B-8C10-BF2D0DB261B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1521417-CC57-4039-AF07-1A2BDF46251F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1521417-CC57-4039-AF07-1A2BDF46251F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1521417-CC57-4039-AF07-1A2BDF46251F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1521417-CC57-4039-AF07-1A2BDF46251F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7B84274-7362-4413-9B86-FAF9FAC4EF1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7B84274-7362-4413-9B86-FAF9FAC4EF1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7B84274-7362-4413-9B86-FAF9FAC4EF1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7B84274-7362-4413-9B86-FAF9FAC4EF1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
