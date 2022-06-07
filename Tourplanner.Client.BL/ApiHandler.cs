@@ -24,44 +24,42 @@ namespace Tourplanner.Client.BL {
 			_client.Dispose();
 		}
 
-		public async Task<T> Get<T>(string url) {
+		public async Task<(T, CustomResponse)> Get<T>(string url) {
 			HttpResponseMessage response = await _client.GetAsync(url);
+			CustomResponse errorResponse = new CustomResponse(true, new Dictionary<string, string>());
 			if(!response.IsSuccessStatusCode) {
-				CustomResponse errorResponse = await response.Content.ReadAsAsync<CustomResponse>();
-				throw new ArgumentException(errorResponse.Errors.ContainsKey("Custom") ? errorResponse.Errors["Custom"] : "Unkown Error");
+				errorResponse = await response.Content.ReadAsAsync<CustomResponse>();
+			}
+			return (await response.Content.ReadAsAsync<T>(), errorResponse);
+		}
+
+		public async Task<(T, CustomResponse)> Post<T>(string url, T newEntry) {
+			HttpResponseMessage response = await _client.PostAsJsonAsync(url, newEntry);
+			CustomResponse errorResponse = new CustomResponse(true, new Dictionary<string, string>());
+			if(!response.IsSuccessStatusCode) {
+				errorResponse = await response.Content.ReadAsAsync<CustomResponse>();
+			}
+			return (await response.Content.ReadAsAsync<T>(), errorResponse);
+		}
+
+		public async Task<(T, CustomResponse)> Put<T>(string url, T newEntry) {
+			HttpResponseMessage response = await _client.PutAsJsonAsync(url, newEntry);
+			CustomResponse errorResponse = new CustomResponse(true, new Dictionary<string, string>());
+			if(!response.IsSuccessStatusCode) {
+				errorResponse = await response.Content.ReadAsAsync<CustomResponse>();
 			}
 
-			return await response.Content.ReadAsAsync<T>();
+			return (await response.Content.ReadAsAsync<T>(), errorResponse);
 		}
 
-        public async Task<T> Post<T>(string url, T newEntry) {
-            HttpResponseMessage response = await _client.PostAsJsonAsync(url, newEntry);
-            if (!response.IsSuccessStatusCode) {
-                CustomResponse errorResponse = await response.Content.ReadAsAsync<CustomResponse>();
-                throw new ArgumentException(errorResponse.Errors.ContainsKey("Custom") ? errorResponse.Errors["Custom"] : "Unkown Error");
-            }
+		public async Task<CustomResponse> Delete(string url) {
+			HttpResponseMessage response = await _client.DeleteAsync(url);
+			CustomResponse errorResponse = new CustomResponse(true, new Dictionary<string, string>());
+			if(!response.IsSuccessStatusCode) {
+				errorResponse = await response.Content.ReadAsAsync<CustomResponse>();
+			}
 
-            return await response.Content.ReadAsAsync<T>();
+			return errorResponse;
 		}
-
-        public async Task<T> Put<T>(string url, T newEntry) {
-            HttpResponseMessage response = await _client.PutAsJsonAsync(url, newEntry);
-            if (!response.IsSuccessStatusCode) {
-                CustomResponse errorResponse = await response.Content.ReadAsAsync<CustomResponse>();
-                throw new ArgumentException(errorResponse.Errors.ContainsKey("Custom") ? errorResponse.Errors["Custom"] : "Unkown Error");
-            }
-
-            return await response.Content.ReadAsAsync<T>();
-		}
-
-		public async Task<bool> Delete(string url) {
-            HttpResponseMessage response = await _client.DeleteAsync(url);
-            if (!response.IsSuccessStatusCode) {
-                CustomResponse errorResponse = await response.Content.ReadAsAsync<CustomResponse>();
-                throw new ArgumentException(errorResponse.Errors.ContainsKey("Custom") ? errorResponse.Errors["Custom"] : "Unkown Error");
-            }
-
-            return true;
-        }
 	}
 }

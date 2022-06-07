@@ -13,17 +13,16 @@ namespace Tourplanner.Client.BL.Controllers {
             _apiHandler = BlFactory.GetApiHandler();
         }
 
-        public async Task<Log> InsertLog(Log newLog) {
+        public async Task<(Log, CustomResponse)> InsertLog(Log newLog) {
             return await _apiHandler.Post<Log>("Log", newLog);
         }
 
-        public async Task<Log> UpdateLog(int id, Log newLog) {
+        public async Task<(Log, CustomResponse)> UpdateLog(int id, Log newLog) {
             return await _apiHandler.Put<Log>($"Log/{id}", newLog);
         }
 
-        public async Task<bool> DeleteLog(int id) {
-            bool response = await _apiHandler.Delete($"Log/{id}");
-            return response;
-        }
+        public async Task<CustomResponse> DeleteLog(int id) {
+	        return await _apiHandler.Delete($"Log/{id}");
+		}
     }
 }

@@ -31,7 +31,10 @@ namespace Tourplanner.Client.Commands {
 			}
 			// get tour from database and create report
 			ReportController reportController = new ReportController();
-			bool success = Task.Run<bool>(async () => await reportController.GenerateTourReport(Int32.Parse(_mainViewModel.CurrentTour.Id), path)).Result;
+			CustomResponse response = Task.Run<CustomResponse>(async () => await reportController.GenerateTourReport(Int32.Parse(_mainViewModel.CurrentTour.Id), path)).Result;
+			if(!response.Success) {
+				MessageBox.Show(response.Errors.ContainsKey("Custom") ? response.Errors["Custom"] : "Unknown Error", "Tourplanner", MessageBoxButton.OK, MessageBoxImage.Error);
+			}
 		}
 	}
 }

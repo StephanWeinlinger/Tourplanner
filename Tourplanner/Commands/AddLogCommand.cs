@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Tourplanner.Client.BL.Controllers;
 using Tourplanner.Client.ViewModels;
 using Tourplanner.Client.Views;
@@ -20,7 +21,11 @@ namespace Tourplanner.Client.Commands {
 			// add log
 			LogController logController = new LogController();
 			// insert log in database
-			Log newLog = Task.Run<Log>(async () => await logController.InsertLog(new Log(_modifyLogViewModel.TourId, _modifyLogViewModel.Date, _modifyLogViewModel.Comment, _modifyLogViewModel.Difficulty, _modifyLogViewModel.Time, _modifyLogViewModel.Rating))).Result;
+			var (newLog, response) = Task.Run<(Log, CustomResponse)>(async () => await logController.InsertLog(new Log(_modifyLogViewModel.TourId, _modifyLogViewModel.Date, _modifyLogViewModel.Comment, _modifyLogViewModel.Difficulty, _modifyLogViewModel.Time, _modifyLogViewModel.Rating))).Result;
+			if(!response.Success) {
+				MessageBox.Show(response.Errors.ContainsKey("Custom") ? response.Errors["Custom"] : "Unknown Error", "Tourplanner", MessageBoxButton.OK, MessageBoxImage.Error);
+				return;
+			}
 			// add log to collection
 			_modifyLogViewModel.MainViewModel.CurrentTour.LogsCollection.Add(new LogViewModel(newLog));
 			_modifyLogViewModel.ModifyLogView.Close();

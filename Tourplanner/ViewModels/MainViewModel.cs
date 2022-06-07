@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Tourplanner.Client.BL.Controllers;
 using Tourplanner.Client.Commands;
@@ -29,13 +30,12 @@ namespace Tourplanner.Client.ViewModels {
 
 		public SearchBarViewModel SearchBarViewModel;
 
-		public MainViewModel(SearchBarViewModel searchBarViewModel) {
+		public MainViewModel(SearchBarViewModel searchBarViewModel, List<CombinedTour> combinedTours) {
 			// initialize subviewmodels
 			SearchBarViewModel = searchBarViewModel;
 
 			ToursCollection = new ObservableCollection<TourViewModel>();
-			TourController tourController = new TourController();
-			List<CombinedTour> combinedTours = Task.Run<List<CombinedTour>>(async () => await tourController.GetCombinedTours()).Result;
+			
 			foreach(CombinedTour combinedTour in combinedTours) {
 				ToursCollection.Add(new TourViewModel(combinedTour));
 			}

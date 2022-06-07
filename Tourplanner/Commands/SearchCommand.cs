@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Tourplanner.Client.BL;
 using Tourplanner.Client.BL.Controllers;
 using Tourplanner.Client.ViewModels;
@@ -19,7 +20,11 @@ namespace Tourplanner.Client.Commands {
 		public override void Execute(object parameter) {
 			// get tours from database
 			TourController tourController = new TourController();
-			List<CombinedTour> combinedTours = Task.Run<List<CombinedTour>>(async () => await tourController.GetCombinedTours(_mainViewModel.SearchBarViewModel.Filter)).Result;
+			var (combinedTours, response) = Task.Run<(List<CombinedTour>, CustomResponse)>(async () => await tourController.GetCombinedTours(_mainViewModel.SearchBarViewModel.Filter)).Result;
+			if(!response.Success) {
+				MessageBox.Show(response.Errors.ContainsKey("Custom") ? response.Errors["Custom"] : "Unknown Error", "Tourplanner", MessageBoxButton.OK, MessageBoxImage.Error);
+				return;
+			}
 			// clear and add tours to collection
 			_mainViewModel.ToursCollection.Clear();
 			foreach(CombinedTour combinedTour in combinedTours) {

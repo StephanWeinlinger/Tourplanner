@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Tourplanner.Client.BL;
 using Tourplanner.Client.BL.Controllers;
 using Tourplanner.Client.ViewModels;
@@ -26,7 +27,10 @@ namespace Tourplanner.Client.Commands {
 			}
 			// get tours from database and generate report
 			ReportController reportController = new ReportController();
-			bool success = Task.Run<bool>(async () => await reportController.GenerateSummarizedReport(path)).Result;
+			CustomResponse response = Task.Run<CustomResponse>(async () => await reportController.GenerateSummarizedReport(path)).Result;
+			if(!response.Success) {
+				MessageBox.Show(response.Errors.ContainsKey("Custom") ? response.Errors["Custom"] : "Unknown Error", "Tourplanner", MessageBoxButton.OK, MessageBoxImage.Error);
+			}
 		}
 	}
 }

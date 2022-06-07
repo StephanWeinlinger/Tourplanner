@@ -17,19 +17,19 @@ namespace Tourplanner.Client.BL.Controllers {
             _fileExplorer = BlFactory.GetFileExplorer();
         }
 
-        public async Task<List<CombinedTour>> ImportTours(string path) {
+        public async Task<(List<CombinedTour>, CustomResponse)> ImportTours(string path) {
 	        // get data from export file
             List<CombinedTour> tours = JsonConvert.DeserializeObject<List<CombinedTour>>(File.ReadAllText(@path));
             // send to api
             return await _apiHandler.Post<List<CombinedTour>>("Import", tours);
         }
 
-        public async Task<bool> ExportTours(string path) {
+        public async Task<CustomResponse> ExportTours(string path) {
 			// get newest version of tours
-			List<CombinedTour> tours = await _apiHandler.Get<List<CombinedTour>>($"Tour");
+			var (tours, response) = await _apiHandler.Get<List<CombinedTour>>($"Tour");
             // generate export file
             File.WriteAllText(@$"{path}/tourplanner.json", JsonConvert.SerializeObject(tours));
-            return true;
+            return response;
         }
     }
 }

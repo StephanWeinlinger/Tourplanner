@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Tourplanner.Client.BL.Controllers;
 using Tourplanner.Client.ViewModels;
 using Tourplanner.Shared.Model;
@@ -19,7 +20,11 @@ namespace Tourplanner.Client.Commands {
 			// update tour
 			TourController tourController = new TourController();
 			// update tour in database
-			CombinedTour updatedTour = Task.Run<CombinedTour>(async () => await tourController.UpdateTour(_modifyTourViewModel.Id, new Tour(_modifyTourViewModel.Title, _modifyTourViewModel.Description, _modifyTourViewModel.From, _modifyTourViewModel.To, _modifyTourViewModel.TransportType))).Result;
+			var (updatedTour, response) = Task.Run<(CombinedTour, CustomResponse)>(async () => await tourController.UpdateTour(_modifyTourViewModel.Id, new Tour(_modifyTourViewModel.Title, _modifyTourViewModel.Description, _modifyTourViewModel.From, _modifyTourViewModel.To, _modifyTourViewModel.TransportType))).Result;
+			if(!response.Success) {
+				MessageBox.Show(response.Errors.ContainsKey("Custom") ? response.Errors["Custom"] : "Unknown Error", "Tourplanner", MessageBoxButton.OK, MessageBoxImage.Error);
+				return;
+			}
 			// update tour in collection
 			_modifyTourViewModel.MainViewModel.ToursCollection[_modifyTourViewModel.MainViewModel.ToursCollection.IndexOf(_modifyTourViewModel.MainViewModel.ToursCollection.First(entry =>
 				Int32.Parse(entry.Id) == _modifyTourViewModel.Id))] = new TourViewModel(updatedTour);

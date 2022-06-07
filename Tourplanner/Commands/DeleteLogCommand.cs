@@ -24,7 +24,11 @@ namespace Tourplanner.Client.Commands {
 			}
 			LogController logController = new LogController();
 			// remove log in database
-			Task.Run<bool>(async () => await logController.DeleteLog(Int32.Parse(_mainViewModel.CurrentLog.Id)));
+			CustomResponse response = Task.Run<CustomResponse>(async () => await logController.DeleteLog(Int32.Parse(_mainViewModel.CurrentLog.Id))).Result;
+			if(!response.Success) {
+				MessageBox.Show(response.Errors.ContainsKey("Custom") ? response.Errors["Custom"] : "Unknown Error", "Tourplanner", MessageBoxButton.OK, MessageBoxImage.Error);
+				return;
+			}
 			// remove log from collection
 			_mainViewModel.CurrentTour.LogsCollection.Remove(_mainViewModel.CurrentLog);
 		}

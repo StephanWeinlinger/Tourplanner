@@ -24,7 +24,11 @@ namespace Tourplanner.Client.Commands {
 			}
 			TourController tourController = new TourController();
 			// remove tour in database
-			Task.Run<bool>(async () => await tourController.DeleteTour(Int32.Parse(_mainViewModel.CurrentTour.Id)));
+			CustomResponse response = Task.Run<CustomResponse>(async () => await tourController.DeleteTour(Int32.Parse(_mainViewModel.CurrentTour.Id))).Result;
+			if(!response.Success) {
+				MessageBox.Show(response.Errors.ContainsKey("Custom") ? response.Errors["Custom"] : "Unknown Error", "Tourplanner", MessageBoxButton.OK, MessageBoxImage.Error);
+				return;
+			}
 			// remove tour from collection
 			_mainViewModel.ToursCollection.Remove(_mainViewModel.CurrentTour);
 		}

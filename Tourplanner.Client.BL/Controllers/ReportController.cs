@@ -18,20 +18,24 @@ namespace Tourplanner.Client.BL.Controllers {
             _fileExplorer = BlFactory.GetFileExplorer();
         }
 
-        public async Task<bool> GenerateTourReport(int id, string path) {
+        public async Task<CustomResponse> GenerateTourReport(int id, string path) {
             // get newest version of tour
-            CombinedTour tour = await _apiHandler.Get<CombinedTour>($"Tour/{id}");
-            PdfHandler pdfHandler = BlFactory.CreatePdfHandler($"{path}/tour{id}_report.pdf");
-            pdfHandler.GenerateTourReport(tour);
-            return true;
+            var (tour, response) = await _apiHandler.Get<CombinedTour>($"Tour/{id}");
+			if(response.Success) {
+	            PdfHandler pdfHandler = BlFactory.CreatePdfHandler($"{path}/tour{id}_report.pdf");
+	            pdfHandler.GenerateTourReport(tour);
+			}
+			return response;
         }
 
-        public async Task<bool> GenerateSummarizedReport(string path) {
+        public async Task<CustomResponse> GenerateSummarizedReport(string path) {
             // get newest version of tours
-            List<CombinedTour> tours = await _apiHandler.Get<List<CombinedTour>>($"Tour");
-            PdfHandler pdfHandler = BlFactory.CreatePdfHandler($"{path}/tours_report.pdf");
-            pdfHandler.GenerateSummarizedReport(tours);
-            return true;
+            var (tours, response) = await _apiHandler.Get<List<CombinedTour>>($"Tour");
+            if(response.Success) {
+	            PdfHandler pdfHandler = BlFactory.CreatePdfHandler($"{path}/tours_report.pdf");
+	            pdfHandler.GenerateSummarizedReport(tours);
+			}
+            return response;
         }
     }
 }

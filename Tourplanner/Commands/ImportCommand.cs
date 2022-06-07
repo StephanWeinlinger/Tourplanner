@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Tourplanner.Client.BL;
 using Tourplanner.Client.BL.Controllers;
 using Tourplanner.Client.ViewModels;
@@ -26,7 +27,11 @@ namespace Tourplanner.Client.Commands {
 			}
 			// add tours to database
 			ImportController importController = new ImportController();
-			List<CombinedTour> combinedTours = Task.Run<List<CombinedTour>>(async () => await importController.ImportTours(path)).Result;
+			var (combinedTours, response) = Task.Run<(List<CombinedTour>, CustomResponse)>(async () => await importController.ImportTours(path)).Result;
+			if(!response.Success) {
+				MessageBox.Show(response.Errors.ContainsKey("Custom") ? response.Errors["Custom"] : "Unknown Error", "Tourplanner", MessageBoxButton.OK, MessageBoxImage.Error);
+				return;
+			}
 			// clear and add tours to collection
 			_mainViewModel.ToursCollection.Clear();
 			foreach(CombinedTour combinedTour in combinedTours) {
