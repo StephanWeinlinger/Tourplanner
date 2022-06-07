@@ -27,6 +27,7 @@ namespace Tourplanner.Client.Commands {
 			}
 			// add tours to database
 			ImportController importController = new ImportController();
+			MessageBox.Show("Import might take a while, please wait until tours are updated", "Tourplanner", MessageBoxButton.OK, MessageBoxImage.Information);
 			var (combinedTours, response) = Task.Run<(List<CombinedTour>, CustomResponse)>(async () => await importController.ImportTours(path)).Result;
 			if(!response.Success) {
 				MessageBox.Show(response.Errors.ContainsKey("Custom") ? response.Errors["Custom"] : "Unknown Error", "Tourplanner", MessageBoxButton.OK, MessageBoxImage.Error);
