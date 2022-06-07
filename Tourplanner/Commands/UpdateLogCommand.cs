@@ -21,8 +21,7 @@ namespace Tourplanner.Client.Commands {
 			LogController logController = new LogController();
 			// update log in database
 			var (updatedLog, response) = Task.Run<(Log, CustomResponse)>(async () => await logController.UpdateLog(_modifyLogViewModel.Id, new Log(_modifyLogViewModel.TourId, _modifyLogViewModel.Date, _modifyLogViewModel.Comment, _modifyLogViewModel.Difficulty, _modifyLogViewModel.Time, _modifyLogViewModel.Rating))).Result;
-			if(!response.Success) {
-				MessageBox.Show(response.Errors.ContainsKey("Custom") ? response.Errors["Custom"] : "Unknown Error", "Tourplanner", MessageBoxButton.OK, MessageBoxImage.Error);
+			if(CheckError(response)) {
 				return;
 			}
 			// update log in collection

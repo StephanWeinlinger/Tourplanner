@@ -22,9 +22,7 @@ namespace Tourplanner.Client.Commands {
 			// get current tours from database
 			ImportController importController = new ImportController();
 			CustomResponse response = Task.Run<CustomResponse>(async () => await importController.ExportTours(path)).Result;
-			if(!response.Success) {
-				MessageBox.Show(response.Errors.ContainsKey("Custom") ? response.Errors["Custom"] : "Unknown Error", "Tourplanner", MessageBoxButton.OK, MessageBoxImage.Error);
-			}
+			CheckError(response);
 		}
 	}
 }

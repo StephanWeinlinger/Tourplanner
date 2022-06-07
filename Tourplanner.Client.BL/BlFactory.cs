@@ -12,6 +12,7 @@ namespace Tourplanner.Client.BL {
 	public static class BlFactory {
 		private static ApiHandler _apiHandler;
 		private static FileExplorer _fileExplorer;
+		private static ILoggerWrapper _logger;
 
 		public static ApiHandler GetApiHandler() {
 			if(_apiHandler == null) {
@@ -29,6 +30,14 @@ namespace Tourplanner.Client.BL {
 			}
 
 			return _fileExplorer;
+		}
+
+		public static ILoggerWrapper GetLogger() {
+			if(_logger == null) {
+				_logger = Log4NetWrapper.CreateLogger("./log4net.config");
+			}
+
+			return _logger;
 		}
 
 		public static PdfHandler CreatePdfHandler(string path) {

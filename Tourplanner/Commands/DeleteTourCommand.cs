@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Tourplanner.Client.BL;
 using Tourplanner.Client.BL.Controllers;
 using Tourplanner.Client.ViewModels;
 using Tourplanner.Client.Views;
@@ -19,14 +20,15 @@ namespace Tourplanner.Client.Commands {
 
 		public override void Execute(object parameter) {
 			if(_mainViewModel.CurrentTour == null) {
-				MessageBox.Show("No tour was selected!", "Tourplanner", MessageBoxButton.OK, MessageBoxImage.Error);
+				string message = "No tour was selected!";
+				MessageBox.Show(message, "Tourplanner", MessageBoxButton.OK, MessageBoxImage.Error);
+				BlFactory.GetLogger().Warn(message);
 				return;
 			}
 			TourController tourController = new TourController();
 			// remove tour in database
 			CustomResponse response = Task.Run<CustomResponse>(async () => await tourController.DeleteTour(Int32.Parse(_mainViewModel.CurrentTour.Id))).Result;
-			if(!response.Success) {
-				MessageBox.Show(response.Errors.ContainsKey("Custom") ? response.Errors["Custom"] : "Unknown Error", "Tourplanner", MessageBoxButton.OK, MessageBoxImage.Error);
+			if(CheckError(response)) {
 				return;
 			}
 			// remove tour from collection

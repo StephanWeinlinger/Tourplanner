@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Tourplanner.Client.BL;
 using Tourplanner.Client.BL.Controllers;
 using Tourplanner.Client.ViewModels;
 using Tourplanner.Client.Views;
@@ -19,14 +20,15 @@ namespace Tourplanner.Client.Commands {
 
 		public override void Execute(object parameter) {
 			if(_mainViewModel.CurrentLog == null) {
-				MessageBox.Show("No log was selected!", "Tourplanner", MessageBoxButton.OK, MessageBoxImage.Error);
+				string message = "No log was selected!";
+				MessageBox.Show(message, "Tourplanner", MessageBoxButton.OK, MessageBoxImage.Error);
+				BlFactory.GetLogger().Warn(message);
 				return;
 			}
 			LogController logController = new LogController();
 			// remove log in database
 			CustomResponse response = Task.Run<CustomResponse>(async () => await logController.DeleteLog(Int32.Parse(_mainViewModel.CurrentLog.Id))).Result;
-			if(!response.Success) {
-				MessageBox.Show(response.Errors.ContainsKey("Custom") ? response.Errors["Custom"] : "Unknown Error", "Tourplanner", MessageBoxButton.OK, MessageBoxImage.Error);
+			if(CheckError(response)) {
 				return;
 			}
 			// remove log from collection

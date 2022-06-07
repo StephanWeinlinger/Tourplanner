@@ -22,8 +22,7 @@ namespace Tourplanner.Client.Commands {
 			TourController tourController = new TourController();
 			// insert tour in database
 			var (newTour, response) = Task.Run<(CombinedTour, CustomResponse)>(async () => await tourController.InsertTour(new Tour(_modifyTourViewModel.Title, _modifyTourViewModel.Description, _modifyTourViewModel.From, _modifyTourViewModel.To, _modifyTourViewModel.TransportType))).Result;
-			if(!response.Success) {
-				MessageBox.Show(response.Errors.ContainsKey("Custom") ? response.Errors["Custom"] : "Unknown Error", "Tourplanner", MessageBoxButton.OK, MessageBoxImage.Error);
+			if(CheckError(response)) {
 				return;
 			}
 			// add tour to collection

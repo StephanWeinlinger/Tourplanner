@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Tourplanner.Client.BL;
 using Tourplanner.Client.ViewModels;
 using Tourplanner.Client.Views;
 
@@ -17,7 +18,9 @@ namespace Tourplanner.Client.Commands {
 
 		public override void Execute(object parameter) {
 			if(_mainViewModel.CurrentLog == null) {
-				MessageBox.Show("No log was selected!", "Tourplanner", MessageBoxButton.OK, MessageBoxImage.Error);
+				string message = "No log was selected!";
+				MessageBox.Show(message, "Tourplanner", MessageBoxButton.OK, MessageBoxImage.Error);
+				BlFactory.GetLogger().Warn(message);
 				return;
 			}
 			ModifyLogView modifyLogView = new ModifyLogView();

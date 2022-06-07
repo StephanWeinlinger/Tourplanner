@@ -10,16 +10,16 @@ using Tourplanner.Shared.Model;
 namespace Tourplanner.Client.BL {
 	public class ApiHandler {
 		private HttpClient _client;
+		private ILoggerWrapper _logger;
 
 		public ApiHandler(string url) {
 			_client = new HttpClient();
-			// TODO replace with config file
 			_client.BaseAddress = new Uri(url);
 			_client.DefaultRequestHeaders.Accept.Clear();
 			_client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+			_logger = BlFactory.GetLogger();
 		}
 
-		// TODO check if necessary
 		~ApiHandler() {
 			_client.Dispose();
 		}
@@ -29,6 +29,9 @@ namespace Tourplanner.Client.BL {
 			CustomResponse errorResponse = new CustomResponse(true, new Dictionary<string, string>());
 			if(!response.IsSuccessStatusCode) {
 				errorResponse = await response.Content.ReadAsAsync<CustomResponse>();
+				foreach(KeyValuePair<string, string> entry in errorResponse.Errors) {
+					_logger.Error($"{entry.Key}: {entry.Value}");
+				}
 			}
 			return (await response.Content.ReadAsAsync<T>(), errorResponse);
 		}
@@ -38,6 +41,9 @@ namespace Tourplanner.Client.BL {
 			CustomResponse errorResponse = new CustomResponse(true, new Dictionary<string, string>());
 			if(!response.IsSuccessStatusCode) {
 				errorResponse = await response.Content.ReadAsAsync<CustomResponse>();
+				foreach(KeyValuePair<string, string> entry in errorResponse.Errors) {
+					_logger.Error($"{entry.Key}: {entry.Value}");
+				}
 			}
 			return (await response.Content.ReadAsAsync<T>(), errorResponse);
 		}
@@ -47,6 +53,9 @@ namespace Tourplanner.Client.BL {
 			CustomResponse errorResponse = new CustomResponse(true, new Dictionary<string, string>());
 			if(!response.IsSuccessStatusCode) {
 				errorResponse = await response.Content.ReadAsAsync<CustomResponse>();
+				foreach(KeyValuePair<string, string> entry in errorResponse.Errors) {
+					_logger.Error($"{entry.Key}: {entry.Value}");
+				}
 			}
 
 			return (await response.Content.ReadAsAsync<T>(), errorResponse);
@@ -57,6 +66,9 @@ namespace Tourplanner.Client.BL {
 			CustomResponse errorResponse = new CustomResponse(true, new Dictionary<string, string>());
 			if(!response.IsSuccessStatusCode) {
 				errorResponse = await response.Content.ReadAsAsync<CustomResponse>();
+				foreach(KeyValuePair<string, string> entry in errorResponse.Errors) {
+					_logger.Error($"{entry.Key}: {entry.Value}");
+				}
 			}
 
 			return errorResponse;

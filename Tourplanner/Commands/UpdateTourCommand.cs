@@ -21,8 +21,7 @@ namespace Tourplanner.Client.Commands {
 			TourController tourController = new TourController();
 			// update tour in database
 			var (updatedTour, response) = Task.Run<(CombinedTour, CustomResponse)>(async () => await tourController.UpdateTour(_modifyTourViewModel.Id, new Tour(_modifyTourViewModel.Title, _modifyTourViewModel.Description, _modifyTourViewModel.From, _modifyTourViewModel.To, _modifyTourViewModel.TransportType))).Result;
-			if(!response.Success) {
-				MessageBox.Show(response.Errors.ContainsKey("Custom") ? response.Errors["Custom"] : "Unknown Error", "Tourplanner", MessageBoxButton.OK, MessageBoxImage.Error);
+			if(CheckError(response)) {
 				return;
 			}
 			// update tour in collection

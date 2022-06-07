@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Tourplanner.Client;
+using Tourplanner.Client.BL;
 using Tourplanner.Client.BL.Controllers;
 using Tourplanner.Client.ViewModels;
 using Tourplanner.Client.Views;
@@ -25,6 +26,7 @@ namespace Tourplanner.Client {
 			    MessageBoxResult result = MessageBox.Show("Connection to database could not be established! Do you want to continue?", "Tourplanner", MessageBoxButton.YesNo,
 				    MessageBoxImage.Error);
 			    if(result == MessageBoxResult.No) {
+					BlFactory.GetLogger().Fatal("Shutdown by user");
 					Shutdown();
 					return;
 			    }
