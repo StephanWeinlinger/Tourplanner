@@ -19,7 +19,7 @@ namespace Tourplanner.Client.ViewModels {
 		public string From => _tour.From;
 		public string To => _tour.To;
 		public string TransportType => _tour.TransportType;
-		public string Distance => _tour.Distance.ToString();
+		public string Distance => $"{_tour.Distance.ToString()} km";
 		public string Time => _tour.Time;
 		public string Popularity { get; set; }
 		public string ChildFriendliness { get; set; }
@@ -28,12 +28,35 @@ namespace Tourplanner.Client.ViewModels {
 		public TourViewModel(CombinedTour combinedTour) {
 			_tour = new Tour(combinedTour.Id, combinedTour.Name, combinedTour.Description, combinedTour.From, combinedTour.To, combinedTour.TransportType, combinedTour.Distance, combinedTour.Time);
 			LogsCollection = new ObservableCollection<LogViewModel>();
+			int totalDifficulty = 0;
 			foreach(Log entry in combinedTour.Logs) {
 				LogsCollection.Add(new LogViewModel(entry));
+				totalDifficulty += entry.Difficulty;
 			}
-			Popularity = "1";
-			ChildFriendliness = "1";
+			// calculate popularity
+			Popularity = combinedTour.Logs.Count.ToString();
+			// calculate child friendliness
+			ChildFriendliness = "0";
+			if(totalDifficulty > 0) {
+				ChildFriendliness = (totalDifficulty / combinedTour.Logs.Count).ToString();
+			}
+			LogsCollection.CollectionChanged += LogsCollection_CollectionChanged;
 			ImageLink = $"https://localhost:44314/Static/{combinedTour.Id}.jpeg";
+		}
+
+		// reevalute value if collection changes
+		private void LogsCollection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
+			int totalDifficulty = 0;
+			foreach(LogViewModel entry in LogsCollection) {
+				totalDifficulty += Int32.Parse(entry.Difficulty);
+			}
+			// calculate popularity
+			Popularity = LogsCollection.Count.ToString();
+			// calculate child friendliness
+			ChildFriendliness = "0";
+			if(totalDifficulty > 0) {
+				ChildFriendliness = (totalDifficulty / LogsCollection.Count).ToString();
+			}
 		}
 	}
 }

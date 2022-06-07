@@ -15,10 +15,6 @@ namespace Tourplanner.Server.Controllers {
     [Route("api/[controller]")]
     public class ImportController : ControllerBase {
 
-		// expects List<CombinedTour> without distance and time
-		// if Id <-> TourId or Id from Log have conflicts the entry will be skipped
-		// returns GetCombinedTours
-		// TODO maybe add exception handling, even though it shouldn't throw them, since ids are set by database
 		[HttpPost]
 		public async Task<ActionResult<List<CombinedTour>>> ImportTours(IEnumerable<CombinedTour> newCombinedTours) {
 			if(!ModelState.IsValid) {
