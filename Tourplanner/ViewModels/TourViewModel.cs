@@ -46,7 +46,7 @@ namespace Tourplanner.Client.ViewModels {
 			// get image url
 			Dictionary<string, string> config =
 				JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText("../../../../configClient.json"));
-			ImageLink = $"{config["ImageURL"]}{combinedTour.Id}.jpeg";
+			ImageLink = $"{config["ImageUrl"]}{combinedTour.Id}.jpeg";
 		}
 
 		// reevalute value if collection changes

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tourplanner.Client.Views"
 		mc:Ignorable="d"
-        Title="Add Tour" Height="350" Width="350">
+        Title="Modify Tour" Height="350" Width="350" MinHeight="300" MinWidth="300" FontSize="14">
     <Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto"/>
