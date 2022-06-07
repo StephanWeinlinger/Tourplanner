@@ -25,7 +25,7 @@
 		<Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Margin="5">Date:</Label>
 		<DatePicker Grid.Row="0" Grid.Column="1" Margin="5" SelectedDate="{Binding Date}"/>
 		<Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Margin="5">Comment:</Label>
-		<TextBox Grid.Row="1" Grid.Column="1" Margin="5" Text="{Binding Comment}"/>
+		<TextBox Grid.Row="1" Grid.Column="1" Margin="5" Text="{Binding Comment, UpdateSourceTrigger=PropertyChanged}"/>
 		<Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Margin="5">Difficulty:</Label>
 		<Grid Grid.Row="2" Grid.Column="1" Margin="5">
 			<Grid.ColumnDefinitions>
@@ -38,7 +38,7 @@
 			<Label Grid.Column="2">Hard</Label>
 		</Grid>
 		<Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Margin="5">Time:</Label>
-		<TextBox Grid.Row="3" Grid.Column="1" Margin="5" Text="{Binding Time}"/>
+		<TextBox Grid.Row="3" Grid.Column="1" Margin="5" Text="{Binding Time, UpdateSourceTrigger=PropertyChanged}"/>
 		<Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" Margin="5">Rating</Label>
 		<Grid Grid.Row="4" Grid.Column="1" Margin="5">
 			<Grid.ColumnDefinitions>
@@ -50,6 +50,6 @@
 			<Slider Grid.Column="1" Value="{Binding Rating}" Minimum="1" Maximum="5" />
 			<Label Grid.Column="2">Good</Label>
 		</Grid>
-		<Button Grid.Row="6" Grid.Column="1" Margin="5,5,5,235" Content="{Binding ButtonText}" Command="{Binding CurrentCommand}"/>
+		<Button Grid.Row="6" Grid.Column="1" Margin="5,5,5,235" Content="{Binding ButtonText}" Command="{Binding CurrentCommand}" IsEnabled="{Binding CanSubmit}"/>
 	</Grid>
 </Window>

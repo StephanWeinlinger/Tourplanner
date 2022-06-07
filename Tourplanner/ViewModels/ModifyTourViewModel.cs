@@ -19,39 +19,43 @@ namespace Tourplanner.Client.ViewModels {
 		private readonly ErrorsViewModel _errorsViewModel;
 
 		public ModifyTourViewModel(MainViewModel mainViewModel, ModifyTourView modifyTourView) {
+			_errorsViewModel = new ErrorsViewModel();
+			_errorsViewModel.ErrorsChanged += OnErrorsChanged;
+
 			MainViewModel = mainViewModel;
 			ModifyTourView = modifyTourView;
 			ModifyTourView.DataContext = this;
 			// set default TransportType
-			_transportType = "Car";
+			TransportType = "Car";
 			// set button text
-			_buttonText = "Insert Tour";
+			ButtonText = "Insert Tour";
 			// set command (insert or update)
 			CurrentCommand = new AddTourCommand(this);
 
-			_errorsViewModel = new ErrorsViewModel();
-			_errorsViewModel.ErrorsChanged += OnErrorsChanged;
+			_errorsViewModel.AddError(nameof(Title), "Title can't be empty");
+			_errorsViewModel.AddError(nameof(Description), "Description can't be empty");
+			_errorsViewModel.AddError(nameof(From), "From can't be empty");
+			_errorsViewModel.AddError(nameof(To), "To can't be empty");
 		}
 
 		public ModifyTourViewModel(MainViewModel mainViewModel, TourViewModel tourViewModel, ModifyTourView modifyTourView) {
 			_errorsViewModel = new ErrorsViewModel();
+			_errorsViewModel.ErrorsChanged += OnErrorsChanged;
+
 			MainViewModel = mainViewModel;
 			ModifyTourView = modifyTourView;
 			ModifyTourView.DataContext = this;
 			// initialize fields with values
-			_id = Int32.Parse(tourViewModel.Id);
-			_title = tourViewModel.Name;
-			_description = tourViewModel.Description;
-			_from = tourViewModel.From;
-			_to = tourViewModel.To;
-			_transportType = tourViewModel.TransportType;
+			Id = Int32.Parse(tourViewModel.Id);
+			Title = tourViewModel.Name;
+			Description = tourViewModel.Description;
+			From = tourViewModel.From;
+			To = tourViewModel.To;
+			TransportType = tourViewModel.TransportType;
 			// set button text and transport type index
-			_buttonText = "Update Tour";
+			ButtonText = "Update Tour";
 			// set command (insert or update)
 			CurrentCommand = new UpdateTourCommand(this);
-
-			_errorsViewModel = new ErrorsViewModel();
-			_errorsViewModel.ErrorsChanged += OnErrorsChanged;
 		}
 
 		private int _id;
@@ -72,6 +76,10 @@ namespace Tourplanner.Client.ViewModels {
 			}
 			set {
 				_title = value;
+				_errorsViewModel.ClearErrors(nameof(Title));
+				if(_title == "") {
+					_errorsViewModel.AddError(nameof(Title), "Title can't be empty");
+				}
 				OnPropertyChanged(nameof(Title));
 			}
 		}
@@ -83,6 +91,10 @@ namespace Tourplanner.Client.ViewModels {
 			}
 			set {
 				_description = value;
+				_errorsViewModel.ClearErrors(nameof(Description));
+				if(_description == "") {
+					_errorsViewModel.AddError(nameof(Description), "Description can't be empty");
+				}
 				OnPropertyChanged(nameof(Description));
 			}
 		}
@@ -94,6 +106,10 @@ namespace Tourplanner.Client.ViewModels {
 			}
 			set {
 				_from = value;
+				_errorsViewModel.ClearErrors(nameof(From));
+				if(_from == "") {
+					_errorsViewModel.AddError(nameof(From), "From can't be empty");
+				}
 				OnPropertyChanged(nameof(From));
 			}
 		}
@@ -105,6 +121,10 @@ namespace Tourplanner.Client.ViewModels {
 			}
 			set {
 				_to = value;
+				_errorsViewModel.ClearErrors(nameof(To));
+				if(_to == "") {
+					_errorsViewModel.AddError(nameof(To), "To can't be empty");
+				}
 				OnPropertyChanged(nameof(To));
 			}
 		}
