@@ -22,20 +22,20 @@
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
 		<Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Margin="5">Tour Title</Label>
-		<TextBox Grid.Row="0" Grid.Column="1" Margin="5" Text="{Binding Title}"/>
+		<TextBox Grid.Row="0" Grid.Column="1" Margin="5" Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"/>
 		<Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Margin="5">Description</Label>
-		<TextBox Grid.Row="1" Grid.Column="1" Margin="5" Text="{Binding Description}"/>
+		<TextBox Grid.Row="1" Grid.Column="1" Margin="5" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
 		<Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Margin="5">From:</Label>
-		<TextBox Grid.Row="2" Grid.Column="1" Margin="5" Text="{Binding From}"/>
+		<TextBox Grid.Row="2" Grid.Column="1" Margin="5" Text="{Binding From, UpdateSourceTrigger=PropertyChanged}"/>
 		<Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Margin="5">To:</Label>
-		<TextBox Grid.Row="3" Grid.Column="1" Margin="5" Text="{Binding To}"/>
+		<TextBox Grid.Row="3" Grid.Column="1" Margin="5" Text="{Binding To, UpdateSourceTrigger=PropertyChanged}"/>
 		<Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" Margin="5">Transportation Type:</Label>
-		<ComboBox Grid.Row="4" Grid.Column="1" Margin="5" SelectedIndex="{Binding TransportTypeIndex}" Text="{Binding TransportType}">
-			<ComboBoxItem Content="Car" />
+		<ComboBox Grid.Row="4" Grid.Column="1" Margin="5" Text="{Binding TransportType}">
+			<ComboBoxItem Content="Car"/>
 			<ComboBoxItem Content="Bicycle" />
 			<ComboBoxItem Content="Walk" />
 		</ComboBox>
 
-		<Button Grid.Row="6" Grid.Column="1" Margin="5,5,5,235" Content="{Binding ButtonText}" Command="{Binding CurrentCommand}"/>
+		<Button Grid.Row="6" Grid.Column="1" Margin="5,5,5,235" Content="{Binding ButtonText}" Command="{Binding CurrentCommand}" IsEnabled="{Binding CanSubmit}"/>
 	</Grid>
 </Window>
