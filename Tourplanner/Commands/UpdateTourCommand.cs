@@ -24,6 +24,12 @@ namespace Tourplanner.Client.Commands {
 			if(CheckError(response)) {
 				return;
 			}
+			// get logs from selected tour
+			List<Log> logs = new List<Log>();
+			foreach(LogViewModel entry in _modifyTourViewModel.MainViewModel.CurrentTour.Logs) {
+				logs.Add(new Log(Int32.Parse(entry.Id), Int32.Parse(entry.TourId), DateTime.Parse(entry.Date), entry.Comment, Int32.Parse(entry.Difficulty), entry.Time, Int32.Parse(entry.Rating)));
+			}
+			updatedTour.Logs = logs;
 			// update tour in collection
 			_modifyTourViewModel.MainViewModel.ToursCollection[_modifyTourViewModel.MainViewModel.ToursCollection.IndexOf(_modifyTourViewModel.MainViewModel.ToursCollection.First(entry =>
 				Int32.Parse(entry.Id) == _modifyTourViewModel.Id))] = new TourViewModel(updatedTour);
